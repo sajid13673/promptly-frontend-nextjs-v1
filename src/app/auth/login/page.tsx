@@ -2,6 +2,7 @@
 import { JSX, useState } from "react";
 import { loginUser } from "@/lib/api";
 import { AuthResponse } from "@/types/AuthResponse";
+import Link from "next/link";
 
 
 
@@ -79,9 +80,9 @@ export default function LoginPage(): JSX.Element {
 
       <p className="text-center text-gray-500 text-sm mt-6">
         Don’t have an account?{" "}
-        <a href="/register" className="text-blue-600 hover:underline">
+        <Link href="/auth/register" className="text-blue-600 hover:underline">
           Sign up
-        </a>
+        </Link>
       </p>
     </div>
   );

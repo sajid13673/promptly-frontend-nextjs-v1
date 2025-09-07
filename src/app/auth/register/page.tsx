@@ -2,6 +2,7 @@
 import { registerUser } from "@/lib/api";
 import { AuthResponse } from "@/types/AuthResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
+import Link from "next/link";
 import { JSX, useState } from "react";
 
 export default function Register(): JSX.Element {
@@ -39,7 +40,7 @@ export default function Register(): JSX.Element {
   };
   return (
     <div className="bg-white p-5 rounded-2xl w-full max-w-md">
-      <h2 className="text-2xl font-bold text-gray-800 text-center ">
+      <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
         Register
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -126,6 +127,12 @@ export default function Register(): JSX.Element {
           )}
         </button>
       </form>
+      <p className="text-center text-gray-500 text-sm mt-6">
+        Already have an account?{" "}
+        <Link href="/auth/login" className="text-blue-600 hover:underline">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }
