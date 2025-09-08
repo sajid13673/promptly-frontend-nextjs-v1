@@ -1,4 +1,5 @@
 import { AuthResponse } from "@/types/AuthResponse";
+import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 
 export async function loginUser(
@@ -43,6 +44,28 @@ export async function registerUser({
 
   if (!res.ok) {
     throw new Error("Register failed");
+  }
+  return res.json();
+}
+
+export async function generate({
+  message,
+  conversationId,
+}: {
+  message: string;
+  conversationId: number | null;
+}): Promise<GenerateResponse> {
+  const res: Response = await fetch("http://localhost:8000/api/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ message, conversation_id: conversationId }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Login failed");
   }
 
   return res.json();
