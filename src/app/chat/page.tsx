@@ -24,8 +24,8 @@ function Chat() {
                 target.style.overflowY =
                   target.scrollHeight > maxHeight ? "scroll" : "hidden";
               }}
-              className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold hover:bg-purple-700 transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent"
-              placeholder="Ask anything?"
+              className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
+              placeholder="Ask anything"
               style={{ maxHeight: "200px" }}
             />
           </form>
