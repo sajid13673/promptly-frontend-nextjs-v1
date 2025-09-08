@@ -2,6 +2,8 @@ import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 
+const token = localStorage.getItem("token");
+
 export async function loginUser(
   email: string,
   password: string
@@ -58,6 +60,7 @@ export async function generate({
   const res: Response = await fetch("http://localhost:8000/api/generate", {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       Accept: "application/json",
     },
