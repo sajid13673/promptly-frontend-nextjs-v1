@@ -1,21 +1,27 @@
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import FullPageLoader from "@/components/FullPageLoader";
 
 const withAuth = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>) => {
   const AuthenticatedComponent = (props: P) => {
     const router = useRouter();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isChecking, setIsChecking] = useState(true);
 
     useEffect(() => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        router.replace('/login');
+        router.replace("/login");
       } else {
-        setIsAuthenticated(true);
+        setIsAuthorized(true);
       }
+      setIsChecking(false);
     }, []);
 
-    if (!isAuthenticated) return null;
+    if (isChecking) return <FullPageLoader />;
+    if (!isAuthorized) return null;
 
     return <WrappedComponent {...props} />;
   };
