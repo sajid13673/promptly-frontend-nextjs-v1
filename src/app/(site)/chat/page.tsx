@@ -1,6 +1,7 @@
 "use client";
 
 import { generate } from "@/lib/api";
+import withAuth from "@/lib/withAuth";
 import { Conversation } from "@/types/Conversation";
 import { GenerateResponse } from "@/types/generateResponse";
 import { ArrowUpCircleIcon } from "@heroicons/react/16/solid";
@@ -58,4 +59,5 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default withAuth(Chat);
+

@@ -2,7 +2,8 @@ import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 
-const token = localStorage.getItem("token");
+// const token: string | null = localStorage.getItem("token");
+const token: string | null = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export async function loginUser(
   email: string,
