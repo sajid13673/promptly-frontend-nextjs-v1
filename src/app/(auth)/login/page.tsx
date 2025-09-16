@@ -1,12 +1,14 @@
 "use client";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { loginUser } from "@/lib/api";
 import { AuthResponse } from "@/types/AuthResponse";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 
 export default function LoginPage(): JSX.Element {
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState("");
@@ -31,6 +33,14 @@ export default function LoginPage(): JSX.Element {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.replace("/"); // Redirect to home
+    }
+  }, []);
+
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
