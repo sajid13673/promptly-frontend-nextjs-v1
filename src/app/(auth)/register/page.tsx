@@ -1,11 +1,12 @@
 "use client";
 import { registerUser } from "@/lib/api";
+import redirectIfAuthenticated from "@/lib/redirectIfAuthenticated";
 import { AuthResponse } from "@/types/AuthResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 import Link from "next/link";
 import { JSX, useState } from "react";
 
-export default function Register(): JSX.Element {
+function Register(): JSX.Element {
   const [formData, setFormData] = useState<RegisterFormData>({
     name: "",
     email: "",
@@ -136,3 +137,5 @@ export default function Register(): JSX.Element {
     </div>
   );
 }
+
+export default redirectIfAuthenticated(Register);
