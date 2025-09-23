@@ -1,0 +1,17 @@
+"use client";
+
+import { Sidebar } from "@/components/sidebar";
+import { useContext } from "react";
+import { SiteLayoutContext } from "../ClientLayout";
+import { SiteLayoutContextType } from "@/types/SiteLayoutContext";
+
+export default function ChatLayout({ children }: { children: React.ReactNode }) {
+  const stx: SiteLayoutContextType = useContext(SiteLayoutContext);
+
+  return (
+    <div className="flex-grow flex">
+      {stx?.sidebarOpen && <Sidebar onClose={() => stx.setSidebarOpen(false)} />}
+      {children}
+    </div>
+  );
+}

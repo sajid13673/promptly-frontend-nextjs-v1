@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import Link from "next/link";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: {
@@ -36,31 +25,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="h-full bg-gradient-to-r from-blue-50 to-purple-50">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-      >
-        {/* Global header */}
-        <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow">
-          <div className="mx-auto max-w-7xl px-4 py-3 flex justify-between items-center">
-            <h1 className="text-lg font-bold text-white">AI Text Generator</h1>
-            <nav className="space-x-4">
-              <Link
-                href="/settings"
-                className="text-white hover:text-blue-100 transition"
-              >
-                Settings
-              </Link>
-            </nav>
-          </div>
-        </header>
-
-        {/* Main content */}
-        <main className="flex-grow flex">{children}</main>
-
-        {/* Global footer */}
-        <footer className="bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-center text-sm text-white">
-          © {new Date().getFullYear()} AI Text Generator. All rights reserved.
-        </footer>
+      <body className="antialiased min-h-screen flex flex-col">
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

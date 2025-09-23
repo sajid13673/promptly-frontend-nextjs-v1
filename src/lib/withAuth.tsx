@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import FullPageLoader from "@/components/FullPageLoader";
+import FullPageLoader from "@/components/fullPageLoader";
 
 const withAuth = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>) => {
   const AuthenticatedComponent = (props: P) => {
