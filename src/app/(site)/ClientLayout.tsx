@@ -1,6 +1,7 @@
 "use client";
 
 import { SiteLayoutContextType } from "@/types/SiteLayoutContext";
+import { ArrowLeftStartOnRectangleIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { createContext, useState } from "react";
 
@@ -18,7 +19,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="text-lg font-bold text-white ml-2 mr-auto"
           >
-            {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+            {sidebarOpen ? <ArrowLeftStartOnRectangleIcon className="h-8 w-8"/> : <ArrowRightStartOnRectangleIcon className="h-8 w-8"/>}
           </button>
           <nav className="space-x-4">
             <Link href="/settings" className="text-white hover:text-blue-100 transition">
