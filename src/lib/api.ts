@@ -2,7 +2,6 @@ import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 
-// const token: string | null = localStorage.getItem("token");
 const token: string | null = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export async function loginUser(
@@ -73,4 +72,21 @@ export async function generate({
   }
 
   return res.json();
+}
+
+export async function logoutUser(): Promise<void> {
+  try {
+    await fetch("http://localhost:8000/api/logout", {
+      method: "POST",
+      headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    });
+    localStorage.removeItem("token");
+    // window.location.href = "/login";
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
 }

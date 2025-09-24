@@ -1,5 +1,6 @@
 "use client";
 
+import { logoutUser } from "@/lib/api";
 import { SiteLayoutContextType } from "@/types/SiteLayoutContext";
 import { ArrowLeftStartOnRectangleIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
@@ -25,6 +26,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <Link href="/settings" className="text-white hover:text-blue-100 transition">
               Settings
             </Link>
+            <button onClick={() => logoutUser()}>logout</button>
           </nav>
         </div>
       </header>
