@@ -23,7 +23,7 @@ function LoginPage(): JSX.Element {
       if (data.token) {
         localStorage.setItem("token", data.token);
       }
-      window.location.href = "/chat";
+      window.location.href = "/";
     } catch (err) {
       console.log("err : ", err);
 
