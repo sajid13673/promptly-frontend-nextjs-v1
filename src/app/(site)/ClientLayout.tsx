@@ -10,7 +10,14 @@ export const SiteLayoutContext = createContext<SiteLayoutContextType>(null);
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      window.location.href = "/login";
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
       <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow">
@@ -26,7 +33,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <Link href="/settings" className="text-white hover:text-blue-100 transition">
               Settings
             </Link>
-            <button onClick={() => logoutUser()}>logout</button>
+            <button onClick={handleLogout}>logout</button>
           </nav>
         </div>
       </header>
