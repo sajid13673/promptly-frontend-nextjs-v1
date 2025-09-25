@@ -90,3 +90,19 @@ export async function logoutUser(): Promise<void> {
     console.error("Logout failed:", error);
   }
 }
+
+export async function getConversations() {
+  const res: Response = await fetch("http://localhost:8000/api/conversations", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+}

@@ -13,7 +13,7 @@ const redirectIfAuthenticated = <P extends Record<string, unknown>>(WrappedCompo
     useEffect(() => {
       const token = localStorage.getItem("token");
       if (token) {
-        router.replace("/chat");
+        router.replace("/");
       } else {
         setIsAuthorized(false);
       }
