@@ -12,8 +12,9 @@ type SidebarProps = {
 };
 
 export function Sidebar({ onClose }: SidebarProps) {
-  const [conversations, setConversations] =
-    useState<[Conversation] | null>(null);
+  const [conversations, setConversations] = useState<[Conversation] | null>(
+    null
+  );
   const fetchConversations = async () => {
     try {
       const res = await getConversations();
@@ -35,20 +36,18 @@ export function Sidebar({ onClose }: SidebarProps) {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 h-screen bg-gray-800 text-white flex flex-col shadow-lg relative"
+      className="w-74 h-screen bg-purple-700 text-white flex flex-col shadow-lg relative pt-2"
     >
-      <button
-        className="absolute top-3 right-3 p-1 rounded hover:bg-gray-700"
-        onClick={onClose}
-      >
-        <XMarkIcon className="h-5 w-5" />
-      </button>
-      <div className="p-3">
-        <h3 className="mt-12 space-y-2 font-bold uppercase">Conversations</h3>
-        <div className="flex flex-col  gap-2 mt-3 p-2">
+      <div className="p-2 bg-purple-600 m-2 rounded-2xl">
+        <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
+        <div className="flex flex-col mt-2 p-2">
           {conversations &&
             conversations.map((conversation) => (
-              <Link key={conversation.id} href={`/${conversation.id}`}>
+              <Link
+                key={conversation.id}
+                href={`/${conversation.id}`}
+                className="block px-2 py-2 hover:bg-purple-700 transition-colors rounded-xl"
+              >
                 {conversation.title}
               </Link>
             ))}
