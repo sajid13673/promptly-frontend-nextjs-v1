@@ -24,7 +24,6 @@ function Chat() {
     }
   };
   return (
-    <div className=" bg-blue-900 flex-grow flex">
       <div className="w-full max-w-md m-auto">
         <h2 className="text-3xl bold mb-3 text-purple-200 text-center font-bold">
           What's on your mind today ?
@@ -55,7 +54,6 @@ function Chat() {
           </div>
         </form>
       </div>
-    </div>
   );
 }
 

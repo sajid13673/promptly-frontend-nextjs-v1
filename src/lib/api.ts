@@ -106,3 +106,19 @@ export async function getConversations() {
   }
   return res.json();
 }
+
+export async function getConversationById(id: string) {
+  const res: Response = await fetch(`http://localhost:8000/api/conversations/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+}
