@@ -1,4 +1,5 @@
 "use client";
+import ChatForm from "@/components/chatForm";
 import { getConversationById } from "@/lib/api";
 import type { Conversation } from "@/types/Conversation";
 import { Message } from "@/types/Message";
@@ -39,6 +40,9 @@ function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
               </div>
             );
           })}
+      </div>
+      <div className="mt-auto w-md p-3">
+        <ChatForm conversation={conversation} setConversation={setConversation}/>
       </div>
     </div>
   );
