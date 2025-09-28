@@ -1,7 +1,8 @@
 "use client";
 import ChatForm from "@/components/chatForm";
-import { getConversationById } from "@/lib/api";
+import { generate, getConversationById } from "@/lib/api";
 import type { Conversation } from "@/types/Conversation";
+import { GenerateResponse } from "@/types/generateResponse";
 import { Message } from "@/types/Message";
 import React, { use, useEffect, useState } from "react";
 
@@ -42,7 +43,19 @@ function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
           })}
       </div>
       <div className="mt-auto w-md p-3">
-        <ChatForm conversation={conversation} setConversation={setConversation}/>
+        <ChatForm
+          onSend={async (message) => {
+            try {
+              const res: GenerateResponse = await generate({
+                message: message,
+                conversationId: conversation?.id || null,
+              });
+              setConversation(res.conversation);
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+        />
       </div>
     </div>
   );
