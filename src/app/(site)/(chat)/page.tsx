@@ -3,28 +3,11 @@
 import ChatForm from "@/components/chatForm";
 import { generate } from "@/lib/api";
 import withAuth from "@/lib/withAuth";
-import { Conversation } from "@/types/Conversation";
 import { GenerateResponse } from "@/types/generateResponse";
-import { ArrowUpCircleIcon } from "@heroicons/react/16/solid";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 function Chat() {
-  // const [message, setMessage] = useState<string>("");
-  // const [conversation, setConversation] = useState<Conversation | null>(null);
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
 
-  //   try {
-  //     const res: GenerateResponse = await generate({
-  //       message,
-  //       conversationId: conversation?.id ?? null,
-  //     });
-  //     setConversation(res.conversation);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
   const router = useRouter();
   return (
     <div className="w-full max-w-md m-auto">
