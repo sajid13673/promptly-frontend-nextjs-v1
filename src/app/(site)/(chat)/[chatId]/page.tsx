@@ -16,6 +16,18 @@ function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
     setConversation(res.data);
   };
 
+  const onSend = async (message: string): Promise<void> => {
+    try {
+      const res: GenerateResponse = await generate({
+        message: message,
+        conversationId: conversation?.id || null,
+      });
+      setConversation(res.conversation);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchConversation();
   }, []);
@@ -43,19 +55,7 @@ function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
           })}
       </div>
       <div className="mt-auto w-md p-3">
-        <ChatForm
-          onSend={async (message) => {
-            try {
-              const res: GenerateResponse = await generate({
-                message: message,
-                conversationId: conversation?.id || null,
-              });
-              setConversation(res.conversation);
-            } catch (error) {
-              console.error(error);
-            }
-          }}
-        />
+        <ChatForm onSend={onSend} />
       </div>
     </div>
   );
