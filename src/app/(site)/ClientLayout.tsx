@@ -49,7 +49,7 @@ export default function ClientLayout({
             >
               Settings
             </Link>
-            <button onClick={handleLogout}>logout</button>
+            <button onClick={handleLogout} className="cursor-pointer hover:text-blue-100 ">logout</button>
           </nav>
         </header>
 
