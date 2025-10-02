@@ -37,3 +37,22 @@ textarea::-webkit-scrollbar-thumb {
   background-color: #d8b4fe; /* light purple */
   border-radius: 9999px;
 }
+
+.minimal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #8702caae;
+  border-radius: 9999px;
+}
+
+.minimal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #8702caae transparent;
+}
+
