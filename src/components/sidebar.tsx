@@ -36,7 +36,7 @@ export function Sidebar({ onClose }: SidebarProps) {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 h-full bg-purple-700 text-white flex flex-col shadow-lg relative pt-2"
+      className="w-74 bg-purple-700 text-white flex flex-col shadow-lg relative pt-2 overflow-y-auto"
     >
       <div className="p-2 bg-purple-600 m-2 rounded-2xl">
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>

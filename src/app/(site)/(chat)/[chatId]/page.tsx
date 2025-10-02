@@ -33,7 +33,7 @@ function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
   }, []);
 
   return (
-    <div className="flex flex-col items-center flex-1 gap-2 p-2">
+    <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto">
       <div className="w-full min-w-md lg:max-w-4xl text-white p-3">
         {conversation?.messages &&
           conversation.messages.map((message: Message) => {

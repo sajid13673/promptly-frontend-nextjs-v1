@@ -17,6 +17,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+
   const handleLogout = async () => {
     try {
       await logoutUser();
@@ -25,36 +26,39 @@ export default function ClientLayout({
       console.error(error);
     }
   };
+
   return (
     <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
-      <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow px-4 py-3 flex">
-        <h1 className="text-lg font-bold text-white">AI Text Generator</h1>
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-lg font-bold text-white ml-2 mr-auto"
-        >
-          {sidebarOpen ? (
-            <ArrowLeftStartOnRectangleIcon className="h-8 w-8" />
-          ) : (
-            <ArrowRightStartOnRectangleIcon className="h-8 w-8" />
-          )}
-        </button>
-        <nav className="space-x-4">
-          <Link
-            href="/settings"
-            className="text-white hover:text-blue-100 transition"
+      <div className="flex flex-col min-h-screen">
+        <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow px-4 py-3 flex">
+          <h1 className="text-lg font-bold text-white">AI Text Generator</h1>
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="text-lg font-bold text-white ml-2 mr-auto"
           >
-            Settings
-          </Link>
-          <button onClick={handleLogout}>logout</button>
-        </nav>
-      </header>
+            {sidebarOpen ? (
+              <ArrowLeftStartOnRectangleIcon className="h-8 w-8" />
+            ) : (
+              <ArrowRightStartOnRectangleIcon className="h-8 w-8" />
+            )}
+          </button>
+          <nav className="space-x-4">
+            <Link
+              href="/settings"
+              className="text-white hover:text-blue-100 transition"
+            >
+              Settings
+            </Link>
+            <button onClick={handleLogout}>logout</button>
+          </nav>
+        </header>
 
-      <main className="flex-grow flex">{children}</main>
+        <main className="flex-grow flex flex-col overflow-y-auto">{children}</main>
 
-      <footer className="bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-center text-sm text-white">
-        © {new Date().getFullYear()} AI Text Generator. All rights reserved.
-      </footer>
+        <footer className="bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-center text-sm text-white">
+          © {new Date().getFullYear()} AI Text Generator. All rights reserved.
+        </footer>
+      </div>
     </SiteLayoutContext.Provider>
   );
 }

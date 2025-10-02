@@ -9,7 +9,7 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
   const stx: SiteLayoutContextType = useContext(SiteLayoutContext);
 
   return (
-    <div className=" bg-blue-900 flex-grow flex">
+    <div className=" bg-blue-900 flex-grow flex h-screen overflow-hidden">
       {stx?.sidebarOpen && <Sidebar onClose={() => stx.setSidebarOpen(false)} />}
       {children}
     </div>

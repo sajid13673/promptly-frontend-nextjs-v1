@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="h-full bg-gradient-to-r from-blue-50 to-purple-50">
-      <body className="antialiased min-h-screen flex flex-col">
+      <body className="antialiased min-h-screen max-h-screen flex flex-col overflow-hidden">
         <ClientLayout>
           {children}
         </ClientLayout>
