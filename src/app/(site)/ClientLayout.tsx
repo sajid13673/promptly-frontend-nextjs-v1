@@ -30,26 +30,26 @@ export default function ClientLayout({
   return (
     <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
       <div className="flex flex-col min-h-screen">
-        <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow px-4 py-3 flex">
+        <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow px-4 py-2 flex items-center">
           <h1 className="text-lg font-bold text-white">AI Text Generator</h1>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-lg font-bold text-white ml-2 mr-auto"
+            className="text-lg font-bold rounded-xl hover:bg-blue-700 p-1.5 text-white ml-2 mr-auto"
           >
             {sidebarOpen ? (
-              <ArrowLeftStartOnRectangleIcon className="h-8 w-8" />
+              <ArrowLeftStartOnRectangleIcon className="h-7 w-7" />
             ) : (
-              <ArrowRightStartOnRectangleIcon className="h-8 w-8" />
+              <ArrowRightStartOnRectangleIcon className="h-7 w-7" />
             )}
           </button>
           <nav className="space-x-4">
             <Link
               href="/settings"
-              className="text-white hover:text-blue-100 transition"
+              className="text-white hover:bg-purple-800 p-2 rounded-xl transition"
             >
               Settings
             </Link>
-            <button onClick={handleLogout} className="cursor-pointer hover:text-blue-100 ">logout</button>
+            <button onClick={handleLogout} className="cursor-pointer text-white hover:bg-purple-800 p-2 rounded-xl transition">logout</button>
           </nav>
         </header>
 
