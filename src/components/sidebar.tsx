@@ -37,7 +37,7 @@ export function Sidebar() {
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
         <div className="flex flex-col mt-2 p-2">
           {conversations &&
-            conversations.map((conversation) => (
+            conversations.map((conversation: Conversation) => (
               <Link
                 key={conversation.id}
                 href={`/conversation/${conversation.id}`}
