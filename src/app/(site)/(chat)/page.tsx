@@ -14,7 +14,7 @@ function Chat() {
         message: message,
         conversationId: null,
       });
-      router.push(`/${res.conversation.id}`);
+      router.push(`/conversation/${res.conversation.id}`);
     } catch (error) {
       console.error(error);
     }

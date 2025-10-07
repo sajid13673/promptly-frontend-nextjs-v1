@@ -45,7 +45,7 @@ export function Sidebar({ onClose }: SidebarProps) {
             conversations.map((conversation) => (
               <Link
                 key={conversation.id}
-                href={`/${conversation.id}`}
+                href={`/conversation/${conversation.id}`}
                 className="block px-2 py-2 hover:bg-purple-700 transition-colors rounded-xl"
               >
                 {conversation.title}

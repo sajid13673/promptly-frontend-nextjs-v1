@@ -6,13 +6,13 @@ import { GenerateResponse } from "@/types/generateResponse";
 import { Message } from "@/types/Message";
 import React, { use, useEffect, useState } from "react";
 
-function Conversation({ params }: { params: Promise<{ chatId: string }> }) {
-  const { chatId } = use(params);
+function Conversation({ params }: { params: Promise<{ conversationId: string }> }) {
+  const { conversationId } = use(params);
   const [conversation, setConversation] = useState<Conversation | null>(null);
-  console.log("conversation", chatId);
+  console.log("conversation", conversationId);
 
   const fetchConversation = async () => {
-    const res = await getConversationById(chatId);
+    const res = await getConversationById(conversationId);
     setConversation(res.data);
   };
 
