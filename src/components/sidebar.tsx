@@ -2,16 +2,11 @@
 
 import { getConversations } from "@/lib/api";
 import { Conversation } from "@/types/Conversation";
-import { XMarkIcon } from "@heroicons/react/16/solid";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type SidebarProps = {
-  onClose: () => void;
-};
-
-export function Sidebar({ onClose }: SidebarProps) {
+export function Sidebar() {
   const [conversations, setConversations] = useState<[Conversation] | null>(
     null
   );
