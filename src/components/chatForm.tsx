@@ -1,37 +1,17 @@
 "use client";
-import { generate } from "@/lib/api";
-import { Conversation } from "@/types/Conversation";
-import { GenerateResponse } from "@/types/generateResponse";
+
 import { ArrowUpCircleIcon } from "@heroicons/react/16/solid";
 import { JSX, useState } from "react";
 
-// function ChatForm({
-//   conversation,
-//   setConversation,
-// }: {
-//   conversation: Conversation | null;
-//   setConversation: (updatedConversation: Conversation) => void;
 type ChatFormProps = {
   onSend: (message: string) => void | Promise<void>;
 };
-// }): JSX.Element {
-function ChatForm({onSend} : ChatFormProps): JSX.Element {
-
+function ChatForm({ onSend }: ChatFormProps): JSX.Element {
   const [message, setMessage] = useState<string>("");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // try {
-    //   const res: GenerateResponse = await generate({
-    //     message,
-    //     conversationId: conversation?.id ?? null,
-    //   });
-    //   setConversation(res.conversation);
-    // } catch (err) {
-    //   console.error(err);
-    // }
     await onSend(message);
-    setMessage('');
+    setMessage("");
   };
   return (
     <form onSubmit={handleSubmit}>
