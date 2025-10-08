@@ -5,16 +5,22 @@ import { Conversation } from "@/types/Conversation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "./loadingSpinner";
 
 export function Sidebar() {
   const [conversations, setConversations] = useState<[Conversation] | null>(
     null
   );
+  const [conversationLoading, setConversationLoading] =
+    useState<boolean>(false);
   const fetchConversations = async () => {
     try {
+      setConversationLoading(true);
       const res = await getConversations();
       setConversations(res.data);
+      setConversationLoading(false);
     } catch (error) {
+      setConversationLoading(false);
       console.error(error);
     }
   };
@@ -35,18 +41,29 @@ export function Sidebar() {
     >
       <div className="p-2 bg-purple-600 m-2 rounded-2xl">
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
-        <div className="flex flex-col mt-2 p-2">
-          {conversations &&
-            conversations.map((conversation: Conversation) => (
-              <Link
-                key={conversation.id}
-                href={`/conversation/${conversation.id}`}
-                className="block px-2 py-2 hover:bg-purple-700 transition-colors rounded-xl"
-              >
-                {conversation.title}
-              </Link>
-            ))}
-        </div>
+        {conversationLoading ? (
+          <div className="flex justify-center py-12">
+            <LoadingSpinner color="white" size={4} border={8} />
+          </div>
+        ) : (
+          <div className="flex flex-col mt-2 p-2">
+            {conversations && conversations.length > 0 ? (
+              conversations.map((conversation: Conversation) => (
+                <Link
+                  key={conversation.id}
+                  href={`/conversation/${conversation.id}`}
+                  className="block px-2 py-2 hover:bg-purple-700 transition-colors rounded-xl"
+                >
+                  {conversation.title}
+                </Link>
+              ))
+            ) : (
+              <p className="text-lg font-bold text-gray-300/80 italic">
+                No conversations to display
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   );
