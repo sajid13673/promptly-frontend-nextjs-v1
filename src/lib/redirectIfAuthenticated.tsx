@@ -20,7 +20,7 @@ const redirectIfAuthenticated = <P extends object>(
         setIsAuthorized(false);
       }
       setIsChecking(false);
-    }, []);
+    }, [router]);
 
     if (isChecking) return <FullPageLoader />;
     if (isAuthorized) return null;

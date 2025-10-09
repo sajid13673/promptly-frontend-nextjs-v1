@@ -18,7 +18,7 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
         setIsAuthorized(true);
       }
       setIsChecking(false);
-    }, []);
+    }, [router]);
 
     if (isChecking) return <FullPageLoader />;
     if (!isAuthorized) return null;

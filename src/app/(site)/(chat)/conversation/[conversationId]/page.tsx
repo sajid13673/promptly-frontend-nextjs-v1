@@ -16,20 +16,19 @@ function Conversation({
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [conversationLoading, setConversationLoading] =
     useState<boolean>(false);
-  console.log("conversation", conversationId);
 
-  const fetchConversation = async (): Promise<void> => {
-    try {
-      setConversationLoading(true);
-      const res = await getConversationById(conversationId);
-      setConversation(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-    finally{
-      setConversationLoading(false);
-    }
-  };
+  // const fetchConversation = async (): Promise<void> => {
+  //   try {
+  //     setConversationLoading(true);
+  //     const res = await getConversationById(conversationId);
+  //     setConversation(res.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   finally{
+  //     setConversationLoading(false);
+  //   }
+  // };
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -44,8 +43,21 @@ function Conversation({
   };
 
   useEffect(() => {
-    fetchConversation();
-  }, []);
+  const fetchConversation = async (): Promise<void> => {
+    try {
+      setConversationLoading(true);
+      const res = await getConversationById(conversationId);
+      setConversation(res.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setConversationLoading(false);
+    }
+  };
+
+  fetchConversation();
+}, [conversationId]);
+
 
   return (
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
