@@ -10,7 +10,7 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className=" bg-blue-900 flex-grow flex h-screen overflow-hidden">
-      {stx?.sidebarOpen && <Sidebar onClose={() => stx.setSidebarOpen(false)} />}
+      {stx?.sidebarOpen && <Sidebar/>}
       {children}
     </div>
   );

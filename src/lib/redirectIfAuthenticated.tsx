@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import FullPageLoader from "@/components/fullPageLoader";
 
-const redirectIfAuthenticated = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>) => {
+const redirectIfAuthenticated = <P extends object>(
+  WrappedComponent: React.ComponentType<P>
+) => {
   const UnauthenticatedComponent = (props: P) => {
     const router = useRouter();
     const [isAuthorized, setIsAuthorized] = useState(true);
