@@ -17,6 +17,12 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
     setLoading(false);
     setMessage("");
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.ctrlKey) {
+      e.preventDefault(); // prevent newline
+      handleSubmit(e);
+    }
+  };
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2 bg-purple-700 p-2 rounded-3xl">
@@ -29,11 +35,12 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
             const maxHeight = 200;
             target.style.height = `${Math.min(
               target.scrollHeight,
-              maxHeight
+              maxHeight,
             )}px`;
             target.style.overflowY =
               target.scrollHeight > maxHeight ? "scroll" : "hidden";
           }}
+          onKeyDown={handleKeyDown}
           className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
           placeholder="Ask anything"
           style={{ maxHeight: "200px" }}
