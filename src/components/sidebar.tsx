@@ -27,9 +27,6 @@ export function Sidebar() {
   useEffect(() => {
     fetchConversations();
   }, []);
-  useEffect(() => {
-    console.log("coversations", conversations);
-  }, [conversations]);
 
   return (
     <motion.div

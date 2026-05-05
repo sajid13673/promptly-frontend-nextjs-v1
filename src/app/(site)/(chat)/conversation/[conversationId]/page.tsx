@@ -17,19 +17,6 @@ function Conversation({
   const [conversationLoading, setConversationLoading] =
     useState<boolean>(false);
 
-  // const fetchConversation = async (): Promise<void> => {
-  //   try {
-  //     setConversationLoading(true);
-  //     const res = await getConversationById(conversationId);
-  //     setConversation(res.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   finally{
-  //     setConversationLoading(false);
-  //   }
-  // };
-
   const onSend = async (message: string): Promise<void> => {
     try {
       const res: GenerateResponse = await generate({
