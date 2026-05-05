@@ -21,6 +21,7 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2 bg-purple-700 p-2 rounded-3xl">
         <textarea
+          value={message}
           rows={1}
           onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
             const target = e.target as HTMLTextAreaElement;
