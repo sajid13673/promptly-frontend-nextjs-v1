@@ -30,21 +30,20 @@ function Conversation({
   };
 
   useEffect(() => {
-  const fetchConversation = async (): Promise<void> => {
-    try {
-      setConversationLoading(true);
-      const res = await getConversationById(conversationId);
-      setConversation(res.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setConversationLoading(false);
-    }
-  };
+    const fetchConversation = async (): Promise<void> => {
+      try {
+        setConversationLoading(true);
+        const res = await getConversationById(conversationId);
+        setConversation(res.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setConversationLoading(false);
+      }
+    };
 
-  fetchConversation();
-}, [conversationId]);
-
+    fetchConversation();
+  }, [conversationId]);
 
   return (
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
@@ -74,7 +73,7 @@ function Conversation({
             })}
         </div>
       )}
-      <div className="mt-auto w-md p-3">
+      <div className="p-3 sticky bottom-1 w-md mt-auto">
         <ChatForm onSend={onSend} />
       </div>
     </div>
