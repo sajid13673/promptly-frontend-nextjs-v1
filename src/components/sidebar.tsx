@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./loadingSpinner";
+import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
 export function Sidebar() {
   const [conversations, setConversations] = useState<[Conversation] | null>(
@@ -34,8 +35,12 @@ export function Sidebar() {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 bg-purple-700 text-white flex flex-col shadow-lg relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar"
+      className="w-74 bg-purple-700 text-white flex flex-col shadow-lg relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
     >
+      <Link href='/' className="flex gap-2 items-center rounded-xl p-2 hover:bg-purple-500">
+        <PencilSquareIcon className="h-5 w-5" />
+        <h3 className="space-y-2 font-semibold text-lg ">New chat</h3>
+      </Link>
       <div className="p-2 bg-purple-600 m-2 rounded-2xl">
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
         {conversationLoading ? (
