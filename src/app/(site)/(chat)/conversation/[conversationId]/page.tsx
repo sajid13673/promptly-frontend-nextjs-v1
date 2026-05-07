@@ -6,6 +6,7 @@ import type { Conversation } from "@/types/Conversation";
 import { GenerateResponse } from "@/types/generateResponse";
 import { Message } from "@/types/Message";
 import React, { use, useEffect, useState } from "react";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 function Conversation({
   params,
@@ -28,6 +29,7 @@ function Conversation({
       console.error(error);
     }
   };
+  const { speak, cancel, speaking } = useSpeechSynthesis();
 
   useEffect(() => {
     const fetchConversation = async (): Promise<void> => {
@@ -44,6 +46,16 @@ function Conversation({
 
     fetchConversation();
   }, [conversationId]);
+
+  const [currentMessage, setCurrentMessage] = useState<string>("");
+
+  const stopSpeak = () => {
+    cancel();
+  };
+
+  const startSpeaking = (msg: string) => {
+    speak({text: msg});
+  };
 
   return (
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
@@ -67,12 +79,24 @@ function Conversation({
                     }`}
                   >
                     {message.message}
+                    <div style={{ display: "flex", columnGap: "0.5rem" }}>
+                      <button
+                        onClick={() =>
+                          startSpeaking(message.message)
+                        }
+                        className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
+                      >
+                        play
+                      </button>
+                      <button onClick={stopSpeak} className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white">stop</button>
+                    </div>
                   </div>
                 </div>
               );
             })}
         </div>
       )}
+
       <div className="p-3 sticky bottom-1 w-md mt-auto">
         <ChatForm onSend={onSend} />
       </div>
