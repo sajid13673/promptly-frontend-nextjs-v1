@@ -99,12 +99,12 @@ function Conversation({
                       {speaking && !isPaused && (
                         <button onClick={pauseSpeak}>Pause</button>
                       )}
-                      <button
+                      {(speaking || isPaused) && (<button
                         onClick={stopSpeak}
                         className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
                       >
                         stop
-                      </button>
+                      </button>)}
                     </div>
                   </div>
                 </div>
