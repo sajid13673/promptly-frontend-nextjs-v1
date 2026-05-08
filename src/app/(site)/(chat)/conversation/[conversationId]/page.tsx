@@ -17,6 +17,7 @@ function Conversation({
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [conversationLoading, setConversationLoading] =
     useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -47,16 +48,22 @@ function Conversation({
     fetchConversation();
   }, [conversationId]);
 
-  const [currentMessage, setCurrentMessage] = useState<string>("");
-
   const stopSpeak = () => {
     cancel();
   };
 
   const startSpeaking = (msg: string) => {
-    speak({text: msg});
+    speak({ text: msg });
+  };
+  const pauseSpeak = () => {
+    setIsPaused(true);
+    window.speechSynthesis.pause();
   };
 
+  const resumeSpeak = () => {
+    setIsPaused(false);
+    window.speechSynthesis.resume();
+  };
   return (
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
       {conversationLoading ? (
@@ -81,14 +88,23 @@ function Conversation({
                     {message.message}
                     <div style={{ display: "flex", columnGap: "0.5rem" }}>
                       <button
-                        onClick={() =>
-                          startSpeaking(message.message)
-                        }
+                        onClick={() => startSpeaking(message.message)}
                         className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
                       >
                         play
                       </button>
-                      <button onClick={stopSpeak} className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white">stop</button>
+                      {isPaused && (
+                        <button onClick={resumeSpeak}>Resume</button>
+                      )}
+                      {speaking && !isPaused && (
+                        <button onClick={pauseSpeak}>Pause</button>
+                      )}
+                      <button
+                        onClick={stopSpeak}
+                        className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
+                      >
+                        stop
+                      </button>
                     </div>
                   </div>
                 </div>
