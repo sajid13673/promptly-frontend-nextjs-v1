@@ -5,6 +5,9 @@ import { generate, getConversationById } from "@/lib/api";
 import type { Conversation } from "@/types/Conversation";
 import { GenerateResponse } from "@/types/generateResponse";
 import { Message } from "@/types/Message";
+import { PauseIcon } from "@heroicons/react/24/solid";
+import { StopIcon } from "@heroicons/react/24/solid";
+import { PlayIcon } from "@heroicons/react/24/solid";
 import React, { use, useEffect, useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
 
@@ -87,23 +90,27 @@ function Conversation({
                   >
                     {message.message}
                     <div style={{ display: "flex", columnGap: "0.5rem" }}>
-                      <button
+                      {!speaking && (<button
                         onClick={() => startSpeaking(message.message)}
                         className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
                       >
-                        play
-                      </button>
+                        <PlayIcon className="h-6 w-6"/>
+                      </button>)}
                       {isPaused && (
-                        <button onClick={resumeSpeak}>Resume</button>
+                        <button onClick={resumeSpeak}>
+                          <PlayIcon className="h-6 w-6"/>
+                        </button>
                       )}
                       {speaking && !isPaused && (
-                        <button onClick={pauseSpeak}>Pause</button>
+                        <button onClick={pauseSpeak}>
+                          <PauseIcon className="h-6 w-6"/>
+                        </button>
                       )}
                       {(speaking || isPaused) && (<button
                         onClick={stopSpeak}
                         className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
                       >
-                        stop
+                        <StopIcon className="h-6 w-6"/>
                       </button>)}
                     </div>
                   </div>
