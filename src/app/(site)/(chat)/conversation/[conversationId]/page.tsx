@@ -89,30 +89,36 @@ function Conversation({
                     }`}
                   >
                     {message.message}
-                    <div style={{ display: "flex", columnGap: "0.5rem" }}>
-                      {!speaking && (<button
-                        onClick={() => startSpeaking(message.message)}
-                        className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
-                      >
-                        <PlayIcon className="h-6 w-6"/>
-                      </button>)}
-                      {isPaused && (
-                        <button onClick={resumeSpeak}>
-                          <PlayIcon className="h-6 w-6"/>
-                        </button>
-                      )}
-                      {speaking && !isPaused && (
-                        <button onClick={pauseSpeak}>
-                          <PauseIcon className="h-6 w-6"/>
-                        </button>
-                      )}
-                      {(speaking || isPaused) && (<button
-                        onClick={stopSpeak}
-                        className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
-                      >
-                        <StopIcon className="h-6 w-6"/>
-                      </button>)}
-                    </div>
+                    {!isUser && (
+                      <div style={{ display: "flex", columnGap: "0.5rem" }}>
+                        {!speaking && (
+                          <button
+                            onClick={() => startSpeaking(message.message)}
+                            className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
+                          >
+                            <PlayIcon className="h-6 w-6" />
+                          </button>
+                        )}
+                        {isPaused && (
+                          <button onClick={resumeSpeak}>
+                            <PlayIcon className="h-6 w-6" />
+                          </button>
+                        )}
+                        {speaking && !isPaused && (
+                          <button onClick={pauseSpeak}>
+                            <PauseIcon className="h-6 w-6" />
+                          </button>
+                        )}
+                        {(speaking || isPaused) && (
+                          <button
+                            onClick={stopSpeak}
+                            className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
+                          >
+                            <StopIcon className="h-6 w-6" />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
