@@ -21,6 +21,7 @@ function Conversation({
   const [conversationLoading, setConversationLoading] =
     useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -55,7 +56,8 @@ function Conversation({
     cancel();
   };
 
-  const startSpeaking = (msg: string) => {
+  const startSpeaking = (msg: string, id: number) => {
+    setCurrentPlayingId(id);
     speak({ text: msg });
   };
   const pauseSpeak = () => {
@@ -93,13 +95,13 @@ function Conversation({
                       <div style={{ display: "flex", columnGap: "0.5rem" }}>
                         {!speaking && (
                           <button
-                            onClick={() => startSpeaking(message.message)}
+                            onClick={() => startSpeaking(message.message, message.id)}
                             className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
                           >
                             <PlayIcon className="h-6 w-6" />
                           </button>
                         )}
-                        {isPaused && (
+                        {currentPlayingId === message.id &&(<>{isPaused && (
                           <button onClick={resumeSpeak}>
                             <PlayIcon className="h-6 w-6" />
                           </button>
@@ -116,7 +118,7 @@ function Conversation({
                           >
                             <StopIcon className="h-6 w-6" />
                           </button>
-                        )}
+                        )}</>)}
                       </div>
                     )}
                   </div>
