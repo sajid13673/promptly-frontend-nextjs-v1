@@ -1,6 +1,6 @@
 "use client";
 
-import { getConversations } from "@/lib/api";
+import { deleteConversationById, getConversations } from "@/lib/api";
 import { Conversation } from "@/types/Conversation";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -30,6 +30,13 @@ export function Sidebar() {
       setConversationLoading(false);
     } catch (error) {
       setConversationLoading(false);
+      console.error(error);
+    }
+  };
+  const deleteConversation = async (id: number) => {
+    try {
+      await deleteConversationById(id);
+    } catch (error) {
       console.error(error);
     }
   };
@@ -77,7 +84,7 @@ export function Sidebar() {
                     {conversation.title}
                   </Link>
                   {currentHoveredItem === conversation.id && (
-                    <button>
+                    <button onClick={() => deleteConversation(conversation.id)}>
                       <TrashIcon className="h-5 w-5 text-red-400" />
                     </button>
                   )}

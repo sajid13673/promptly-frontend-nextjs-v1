@@ -2,11 +2,12 @@ import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 
-const token: string | null = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const token: string | null =
+  typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export async function loginUser(
   email: string,
-  password: string
+  password: string,
 ): Promise<AuthResponse> {
   const res: Response = await fetch("http://localhost:8000/api/login", {
     method: "POST",
@@ -79,10 +80,10 @@ export async function logoutUser(): Promise<void> {
     await fetch("http://localhost:8000/api/logout", {
       method: "POST",
       headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
     localStorage.removeItem("token");
     // window.location.href = "/login";
@@ -108,14 +109,35 @@ export async function getConversations() {
 }
 
 export async function getConversationById(id: string) {
-  const res: Response = await fetch(`http://localhost:8000/api/conversations/${id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  const res: Response = await fetch(
+    `http://localhost:8000/api/conversations/${id}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     },
-  });
+  );
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+}
+export async function deleteConversationById(id: number) {
+  const res: Response = await fetch(
+    `http://localhost:8000/api/conversations/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    },
+  );
 
   if (!res.ok) {
     throw new Error("Something went wrong");
