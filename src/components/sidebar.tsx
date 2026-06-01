@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import LoadingSpinner from "./loadingSpinner";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { usePathname } from "next/navigation";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 export function Sidebar() {
   const [conversations, setConversations] = useState<[Conversation] | null>(
@@ -17,7 +18,9 @@ export function Sidebar() {
     useState<boolean>(false);
   const pathName = usePathname();
   const isNewChat = pathName === "/";
-  console.log("path", pathName);
+  const [currentHoveredItem, setCurrentHoveredItem] = useState<number | null>(
+    null,
+  );
 
   const fetchConversations = async () => {
     try {
@@ -61,13 +64,24 @@ export function Sidebar() {
           <div className="flex flex-col mt-2 p-2">
             {conversations && conversations.length > 0 ? (
               conversations.map((conversation: Conversation) => (
-                <Link
+                <div
                   key={conversation.id}
-                  href={`/conversation/${conversation.id}`}
-                  className="block px-2 py-2 hover:bg-purple-700 transition-colors rounded-xl"
+                  className="flex flex-row items-center rounded-xl hover:bg-purple-700 px-2 py-2"
+                  onMouseOver={() => setCurrentHoveredItem(conversation.id)}
+                  onMouseOut={() => setCurrentHoveredItem(null)}
                 >
-                  {conversation.title}
-                </Link>
+                  <Link
+                    href={`/conversation/${conversation.id}`}
+                    className="block transition-colors "
+                  >
+                    {conversation.title}
+                  </Link>
+                  {currentHoveredItem === conversation.id && (
+                    <button>
+                      <TrashIcon className="h-5 w-5 text-red-400" />
+                    </button>
+                  )}
+                </div>
               ))
             ) : (
               <p className="text-lg font-bold text-gray-300/80 italic">
