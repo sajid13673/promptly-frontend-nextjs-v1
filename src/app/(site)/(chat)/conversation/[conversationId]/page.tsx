@@ -22,6 +22,7 @@ function Conversation({
     useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
+  const buttonStyle = "bg-transparent hover:bg-blue-400 p-1.5";
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -95,30 +96,42 @@ function Conversation({
                       <div style={{ display: "flex", columnGap: "0.5rem" }}>
                         {!speaking && (
                           <button
-                            onClick={() => startSpeaking(message.message, message.id)}
-                            className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
+                            onClick={() =>
+                              startSpeaking(message.message, message.id)
+                            }
+                            className={buttonStyle}
                           >
                             <PlayIcon className="h-6 w-6" />
                           </button>
                         )}
-                        {currentPlayingId === message.id &&(<>{isPaused && (
-                          <button onClick={resumeSpeak}>
-                            <PlayIcon className="h-6 w-6" />
-                          </button>
+                        {currentPlayingId === message.id && (
+                          <>
+                            {isPaused && (
+                              <button
+                                onClick={resumeSpeak}
+                                className={buttonStyle}
+                              >
+                                <PlayIcon className="h-6 w-6" />
+                              </button>
+                            )}
+                            {speaking && !isPaused && (
+                              <button
+                                onClick={pauseSpeak}
+                                className={buttonStyle}
+                              >
+                                <PauseIcon className="h-6 w-6" />
+                              </button>
+                            )}
+                            {(speaking || isPaused) && (
+                              <button
+                                onClick={stopSpeak}
+                                className={buttonStyle}
+                              >
+                                <StopIcon className="h-6 w-6" />
+                              </button>
+                            )}
+                          </>
                         )}
-                        {speaking && !isPaused && (
-                          <button onClick={pauseSpeak}>
-                            <PauseIcon className="h-6 w-6" />
-                          </button>
-                        )}
-                        {(speaking || isPaused) && (
-                          <button
-                            onClick={stopSpeak}
-                            className="text-md font-bold rounded-xl hover:bg-blue-400 p-1.5 text-white"
-                          >
-                            <StopIcon className="h-6 w-6" />
-                          </button>
-                        )}</>)}
                       </div>
                     )}
                   </div>
