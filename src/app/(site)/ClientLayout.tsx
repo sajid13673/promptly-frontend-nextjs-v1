@@ -17,6 +17,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const buttonStyle = "text-white hover:bg-purple-800 transition rounded-xl";
 
   const handleLogout = async () => {
     try {
@@ -44,21 +45,25 @@ export default function ClientLayout({
               )}
             </button>
             <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
-              {sidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
+              {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
             </span>
           </div>
           <nav className="space-x-4">
-            <Link
-              href="/settings"
-              className="text-white hover:bg-purple-800 p-2 rounded-xl transition"
-            >
+            <Link href="/settings" className={`${buttonStyle} px-2 py-3`}>
               Settings
             </Link>
-            <button onClick={handleLogout} className="text-white hover:bg-purple-800 p-2 rounded-xl transition">logout</button>
+            <button
+              onClick={handleLogout}
+              className={`${buttonStyle} p-2 bg-transparent`}
+            >
+              Logout
+            </button>
           </nav>
         </header>
 
-        <main className="flex-grow flex flex-col overflow-y-auto">{children}</main>
+        <main className="flex-grow flex flex-col overflow-y-auto">
+          {children}
+        </main>
 
         <footer className="bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-center text-sm text-white">
           © {new Date().getFullYear()} AI Text Generator. All rights reserved.
