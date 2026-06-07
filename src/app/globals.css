@@ -56,3 +56,21 @@ textarea::-webkit-scrollbar-thumb {
   scrollbar-color: #8702caae transparent;
 }
 
+@layer base {
+  button {
+    border-radius: 0.5rem;
+    background-color: #9333ea;
+    color: white;
+    cursor: pointer;
+    transition: background-color 150ms;
+  }
+
+  button:hover {
+    background-color: #7e22ce;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

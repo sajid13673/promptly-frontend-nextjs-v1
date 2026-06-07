@@ -54,7 +54,7 @@ export default function ClientLayout({
             >
               Settings
             </Link>
-            <button onClick={handleLogout} className="cursor-pointer text-white hover:bg-purple-800 p-2 rounded-xl transition">logout</button>
+            <button onClick={handleLogout} className="text-white hover:bg-purple-800 p-2 rounded-xl transition">logout</button>
           </nav>
         </header>
 

@@ -49,7 +49,7 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
         <button
           type="submit"
           disabled={loading}
-          className={`bg-purple-600 rounded-2xl cursor-pointer w-10 h-10 ml-auto mr-2 flex items-center justify-center ${
+          className={`bg-purple-600 rounded-2xl w-10 h-10 ml-auto mr-2 flex items-center justify-center ${
             loading ? "opacity-80 cursor-not-allowed" : ""
           }`}
         >
