@@ -35,7 +35,7 @@ export default function ClientLayout({
           <div className="relative group mr-auto">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-lg font-bold rounded-xl hover:bg-blue-700 p-1.5 text-white ml-2 "
+              className="p-1.5 ml-2 bg-transparent hover:bg-blue-800"
             >
               {sidebarOpen ? (
                 <ArrowLeftStartOnRectangleIcon className="h-7 w-7" />
