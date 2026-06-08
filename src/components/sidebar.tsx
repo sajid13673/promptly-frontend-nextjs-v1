@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./loadingSpinner";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/24/solid";
 
 export function Sidebar() {
@@ -21,21 +21,28 @@ export function Sidebar() {
   const [currentHoveredItem, setCurrentHoveredItem] = useState<number | null>(
     null,
   );
+  const [currentPageId, setCurrentPageId] = useState<null | number>(null);
+  const router = useRouter();
 
   const fetchConversations = async () => {
     try {
       setConversationLoading(true);
       const res = await getConversations();
       setConversations(res.data);
-      setConversationLoading(false);
     } catch (error) {
-      setConversationLoading(false);
       console.error(error);
+    }
+    finally{
+      setConversationLoading(false);
     }
   };
   const deleteConversation = async (id: number) => {
     try {
       await deleteConversationById(id);
+      if (id === currentPageId) {
+        router.push("/");
+      }
+      fetchConversations();
     } catch (error) {
       console.error(error);
     }
@@ -43,6 +50,9 @@ export function Sidebar() {
   useEffect(() => {
     fetchConversations();
   }, []);
+  useEffect(() => {
+    setCurrentPageId(parseInt(pathName.replaceAll("/conversation/", "")));
+  }, [pathName]);
 
   return (
     <motion.div
