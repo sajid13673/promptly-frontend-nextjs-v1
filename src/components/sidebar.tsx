@@ -14,8 +14,10 @@ export function Sidebar() {
   const [conversations, setConversations] = useState<[Conversation] | null>(
     null,
   );
-  const [conversationLoading, setConversationLoading] =
-    useState<boolean>(false);
+  const [conversationLoading, setConversationLoading] = useState(false);
+  const [deletingConversationId, setDeletingConversationId] = useState<
+    number | null
+  >(null);
   const pathName = usePathname();
   const isNewChat = pathName === "/";
   const [currentHoveredItem, setCurrentHoveredItem] = useState<number | null>(
@@ -31,13 +33,13 @@ export function Sidebar() {
       setConversations(res.data);
     } catch (error) {
       console.error(error);
-    }
-    finally{
+    } finally {
       setConversationLoading(false);
     }
   };
   const deleteConversation = async (id: number) => {
     try {
+      setDeletingConversationId(id);
       await deleteConversationById(id);
       if (id === currentPageId) {
         router.push("/");
@@ -45,6 +47,8 @@ export function Sidebar() {
       fetchConversations();
     } catch (error) {
       console.error(error);
+    } finally {
+      setDeletingConversationId(null);
     }
   };
   useEffect(() => {
@@ -93,10 +97,18 @@ export function Sidebar() {
                   >
                     {conversation.title}
                   </Link>
-                  {currentHoveredItem === conversation.id && (
-                    <button onClick={() => deleteConversation(conversation.id)}>
-                      <TrashIcon className="h-5 w-5 text-red-400" />
-                    </button>
+                  {(currentHoveredItem === conversation.id &&
+                    deletingConversationId === null) && (
+                      <button
+                        onClick={() => deleteConversation(conversation.id)}
+                      >
+                        <TrashIcon className="h-5 w-5 text-red-400 hover:h-6 hover:w-6" />
+                      </button>
+                    )}
+                  {deletingConversationId === conversation.id && (
+                    <div>
+                      <LoadingSpinner color="red" size={2} />
+                    </div>
                   )}
                 </div>
               ))
