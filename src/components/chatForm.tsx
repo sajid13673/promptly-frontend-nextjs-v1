@@ -54,7 +54,7 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
           }`}
         >
           {loading ? (
-            <LoadingSpinner size={1.5} color="purple-200" border={4} />
+            <LoadingSpinner size={1.5} color="purple" border={4} />
           ) : (
             <ArrowUpCircleIcon className="h-8 w-8 text-purple-200" />
           )}

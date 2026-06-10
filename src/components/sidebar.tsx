@@ -79,7 +79,7 @@ export function Sidebar() {
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
         {conversationLoading ? (
           <div className="flex justify-center py-12">
-            <LoadingSpinner color="white" size={4} border={8} />
+            <LoadingSpinner color="purple" size={4} border={8} />
           </div>
         ) : (
           <div className="flex flex-col mt-2 p-2">
