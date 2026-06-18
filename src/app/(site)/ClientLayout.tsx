@@ -6,6 +6,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/16/solid";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Link from "next/link";
 import { createContext, useState } from "react";
 
@@ -27,8 +28,12 @@ export default function ClientLayout({
       console.error(error);
     }
   };
+  const [queryClient] = useState(
+    () => new QueryClient()
+  );
 
   return (
+    <QueryClientProvider client={queryClient}>
     <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
       <div className="flex flex-col min-h-screen">
         <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow px-4 py-2 flex items-center">
@@ -70,5 +75,6 @@ export default function ClientLayout({
         </footer>
       </div>
     </SiteLayoutContext.Provider>
+    </QueryClientProvider>
   );
 }

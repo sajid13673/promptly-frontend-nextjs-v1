@@ -9,12 +9,11 @@ import LoadingSpinner from "./loadingSpinner";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { usePathname, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { useConversation } from "@/hooks/useConversation";
 
 export function Sidebar() {
-  const [conversations, setConversations] = useState<[Conversation] | null>(
-    null,
-  );
-  const [conversationLoading, setConversationLoading] = useState(false);
+
+  const {data: conversations, isLoading: conversationLoading, refetch} = useConversation();
   const [deletingConversationId, setDeletingConversationId] = useState<
     number | null
   >(null);
@@ -26,17 +25,7 @@ export function Sidebar() {
   const [currentPageId, setCurrentPageId] = useState<null | number>(null);
   const router = useRouter();
 
-  const fetchConversations = async () => {
-    try {
-      setConversationLoading(true);
-      const res = await getConversations();
-      setConversations(res.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setConversationLoading(false);
-    }
-  };
+
   const deleteConversation = async (id: number) => {
     try {
       setDeletingConversationId(id);
@@ -44,16 +33,13 @@ export function Sidebar() {
       if (id === currentPageId) {
         router.push("/");
       }
-      fetchConversations();
+      refetch();
     } catch (error) {
       console.error(error);
     } finally {
       setDeletingConversationId(null);
     }
   };
-  useEffect(() => {
-    fetchConversations();
-  }, []);
   useEffect(() => {
     setCurrentPageId(parseInt(pathName.replaceAll("/conversation/", "")));
   }, [pathName]);

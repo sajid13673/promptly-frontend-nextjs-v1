@@ -3,26 +3,34 @@
 import { ArrowUpCircleIcon } from "@heroicons/react/16/solid";
 import { JSX, useState } from "react";
 import LoadingSpinner from "./loadingSpinner";
+import { useMutation } from "@tanstack/react-query";
 
 type ChatFormProps = {
-  onSend: (message: string) => void | Promise<void>;
+  onSend: (message: string) => Promise<void>;
 };
 function ChatForm({ onSend }: ChatFormProps): JSX.Element {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const sendMessageMutation = useMutation({
+    mutationFn: onSend,
+    onSuccess: () => {
+      setMessage("");
+      setLoading(false);
+    }
+  })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await onSend(message);
-    setLoading(false);
-    setMessage("");
+    sendMessageMutation.mutate(message);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && e.ctrlKey) {
-      e.preventDefault(); // prevent newline
+      e.preventDefault();
       handleSubmit(e);
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2 bg-purple-700 p-2 rounded-3xl">
