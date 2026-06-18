@@ -5,11 +5,15 @@ import { RegisterFormData } from "@/types/RegisterFormData";
 const token: string | null =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  console.log('utl', apiUrl);
+  
+
 export async function loginUser(
   email: string,
   password: string,
 ): Promise<AuthResponse> {
-  const res: Response = await fetch("http://localhost:8000/api/login", {
+  const res: Response = await fetch(`${apiUrl}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +35,7 @@ export async function registerUser({
   password,
   confirmPassword,
 }: RegisterFormData): Promise<AuthResponse> {
-  const res: Response = await fetch("http://localhost:8000/api/register", {
+  const res: Response = await fetch(`${apiUrl}/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +62,7 @@ export async function generate({
   message: string;
   conversationId: number | null;
 }): Promise<GenerateResponse> {
-  const res: Response = await fetch("http://localhost:8000/api/generate", {
+  const res: Response = await fetch(`${apiUrl}/generate`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -77,7 +81,7 @@ export async function generate({
 
 export async function logoutUser(): Promise<void> {
   try {
-    await fetch("http://localhost:8000/api/logout", {
+    await fetch(`${apiUrl}/logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -93,7 +97,7 @@ export async function logoutUser(): Promise<void> {
 }
 
 export async function getConversations() {
-  const res: Response = await fetch("http://localhost:8000/api/conversations", {
+  const res: Response = await fetch(`${apiUrl}/conversations`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -110,7 +114,7 @@ export async function getConversations() {
 
 export async function getConversationById(id: string) {
   const res: Response = await fetch(
-    `http://localhost:8000/api/conversations/${id}`,
+    `${apiUrl}/conversations/${id}`,
     {
       method: "GET",
       headers: {
@@ -128,7 +132,7 @@ export async function getConversationById(id: string) {
 }
 export async function deleteConversationById(id: number) {
   const res: Response = await fetch(
-    `http://localhost:8000/api/conversations/${id}`,
+    `${apiUrl}/conversations/${id}`,
     {
       method: "DELETE",
       headers: {
