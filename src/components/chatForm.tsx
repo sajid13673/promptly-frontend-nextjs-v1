@@ -16,6 +16,8 @@ function ChatForm({ onSend }: ChatFormProps): JSX.Element {
     mutationFn: onSend,
     onSuccess: () => {
       setMessage("");
+    },
+    onSettled: () => {
       setLoading(false);
     }
   })
