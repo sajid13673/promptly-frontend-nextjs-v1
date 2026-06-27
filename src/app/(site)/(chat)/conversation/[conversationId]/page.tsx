@@ -74,7 +74,7 @@ function Conversation({
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
       {conversationLoading ? (
         <div className="my-auto">
-          <LoadingSpinner color="white" border={8} size={10} />
+          <LoadingSpinner color="blue" border={8} size={10} />
         </div>
       ) : (
         <div className="w-full min-w-md lg:max-w-4xl text-white p-3">
