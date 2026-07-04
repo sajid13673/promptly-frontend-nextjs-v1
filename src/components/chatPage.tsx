@@ -1,18 +1,21 @@
 "use client";
 
 import ChatForm from "@/components/chatForm";
+import { useConversation } from "@/hooks/useConversation";
 import { generate } from "@/lib/api";
 import { GenerateResponse } from "@/types/generateResponse";
 import { useRouter } from "next/navigation";
 
 function ChatPage() {
   const router = useRouter();
+  const {refetch} = useConversation();
   const onSend = async (message: string): Promise<void> => {
     try {
       const res: GenerateResponse = await generate({
         message: message,
         conversationId: null,
       });
+      refetch();
       router.push(`/conversation/${res.conversation.id}`);
     } catch (error) {
       console.error(error);
