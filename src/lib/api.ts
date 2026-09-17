@@ -1,6 +1,7 @@
 import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
+import { TranscribeResponse } from "@/types/transcribeResponse";
 
 const token: string | null =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -80,7 +81,7 @@ export async function generate({
   return res.json();
 }
 
-export async function transcribe(blob: Blob): Promise<GenerateResponse> {
+export async function transcribe(blob: Blob): Promise<TranscribeResponse> {
   const formData = new FormData();
   const ext = blob.type.includes("mp4") ? "mp4" : "webm";
   formData.append("file", blob, `recording.${ext}`);
