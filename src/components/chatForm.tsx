@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { transcribe } from "@/lib/api";
 import { StopCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { WaveformVisualizer } from "./waveformVisualizer";
 
 type ChatFormProps = {
   onSend: (message: string) => Promise<void>;
@@ -65,6 +66,7 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
     startRecording,
     stopRecording,
     cancelRecording,
+    analyserRef,
   } = useVoiceRecorder({
     silenceThreshold: 15,
     silenceDuration: 1500,
@@ -72,28 +74,39 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
     onRecordingComplete: uploadRecording,
   });
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="p-2">
       <div className="flex flex-col gap-2 bg-purple-700 p-2 rounded-3xl">
-        <textarea
-          value={message}
-          rows={1}
-          onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
-            const target = e.target as HTMLTextAreaElement;
-            target.style.height = "auto";
-            const maxHeight = 200;
-            target.style.height = `${Math.min(
-              target.scrollHeight,
-              maxHeight,
-            )}px`;
-            target.style.overflowY =
-              target.scrollHeight > maxHeight ? "scroll" : "hidden";
-          }}
-          onKeyDown={handleKeyDown}
-          className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
-          placeholder="Ask anything"
-          style={{ maxHeight: "200px" }}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+        {status !== "recording" ? (
+          <textarea
+            // {status === 'recording' ? (<textarea
+            value={message}
+            rows={1}
+            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = "auto";
+              const maxHeight = 200;
+              target.style.height = `${Math.min(
+                target.scrollHeight,
+                maxHeight,
+              )}px`;
+              target.style.overflowY =
+                target.scrollHeight > maxHeight ? "scroll" : "hidden";
+            }}
+            onKeyDown={handleKeyDown}
+            className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
+            placeholder="Ask anything"
+            style={{ maxHeight: "200px" }}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        ) : (
+          <div className="flex-1 bg-purple-600 rounded-3xl px-2 py-1">
+            <WaveformVisualizer
+              analyserRef={analyserRef}
+              isActive={status === "recording"}
+              color="#d9b5f8"
+            />
+          </div>
+        )}
         <div className="flex justify-end items-center gap-1">
           {status === "idle" && (
             <button
