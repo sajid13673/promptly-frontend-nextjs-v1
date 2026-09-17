@@ -6,6 +6,7 @@ const token: string | null =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const transcriberApiUrl = process.env.NEXT_PUBLIC_TRANSCRIBER_API_URL;
   console.log('utl', apiUrl);
   
 
@@ -70,6 +71,25 @@ export async function generate({
       Accept: "application/json",
     },
     body: JSON.stringify({ message, conversation_id: conversationId }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Login failed");
+  }
+
+  return res.json();
+}
+
+export async function transcribe(blob: Blob): Promise<GenerateResponse> {
+  const formData = new FormData();
+  const ext = blob.type.includes("mp4") ? "mp4" : "webm";
+  formData.append("file", blob, `recording.${ext}`);
+  const res: Response = await fetch(`${transcriberApiUrl}/transcribe`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    body: formData,
   });
 
   if (!res.ok) {
