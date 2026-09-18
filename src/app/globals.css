@@ -1,8 +1,345 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+ /* =========================
+     Base
+     ========================= */
+
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+
+  /* =========================
+     Surface / Containers
+     ========================= */
+
+  --surface: #ffffff;
+  --surface-secondary: #f8fafc;
+  --surface-tertiary: #f1f5f9;
+
+  --card: #ffffff;
+  --card-hover: #f8fafc;
+
+  --sidebar: #f8fafc;
+  --sidebar-hover: #f1f5f9;
+  --sidebar-active: #e0e7ff;
+
+  --header: #ffffff;
+
+  /* =========================
+     Border / Divider
+     ========================= */
+
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-strong: #cbd5e1;
+
+  /* =========================
+     Text
+     ========================= */
+
+  --text-primary: #260f2a;
+  --text-secondary: #005580;
+  --text-muted: #64748b;
+  --text-placeholder: #94a3b8;
+  --text-disabled: #cbd5e1;
+
+  /* =========================
+     Primary / Brand
+     ========================= */
+
+  --primary: hsl(266, 100%, 84%);
+  --primary-hover: hsl(266, 95%, 77%);
+  --primary-active: hsl(266, 90%, 70%);
+  --primary-light: #eef2ff;
+  --primary-lighter: #f5f3ff;
+
+  --primary-foreground: #ffffff;
+
+  /* =========================
+     Secondary
+     ========================= */
+
+  --secondary: #94e3ff;
+  --secondary-hover: #70d9ff;
+  --secondary-light: #f5f3ff;
+
+  --secondary-foreground: #ffffff;
+
+  /* =========================
+     Chat
+     ========================= */
+
+  --chat-background: #ffffff;
+
+  --user-message: #6366f1;
+  --user-message-foreground: #ffffff;
+
+  --assistant-message: #f8fafc;
+  --assistant-message-foreground: #0f172a;
+
+  --message-hover: #f1f5f9;
+
+  /* =========================
+     Input
+     ========================= */
+
+  --input-background: #ffffff;
+  --input-border: #cbd5e1;
+  --input-border-focus: #6366f1;
+
+  --input-placeholder: #94a3b8;
+
+  /* =========================
+     Button
+     ========================= */
+
+  --button-primary: #6366f1;
+  --button-primary-hover: #4f46e5;
+
+  --button-secondary: #f1f5f9;
+  --button-secondary-hover: #e2e8f0;
+
+  --button-ghost-hover: #f1f5f9;
+
+  /* =========================
+     Voice / Recording
+     ========================= */
+
+  --recording: #ef4444;
+  --recording-hover: #dc2626;
+  --recording-light: #fef2f2;
+
+  --recording-wave: #ef4444;
+
+  /* =========================
+     Status
+     ========================= */
+
+  --success: #22c55e;
+  --success-light: #f0fdf4;
+  --success-foreground: #166534;
+
+  --warning: #f59e0b;
+  --warning-light: #fffbeb;
+  --warning-foreground: #92400e;
+
+  --error: #ef4444;
+  --error-light: #fef2f2;
+  --error-foreground: #991b1b;
+
+  --info: #3b82f6;
+  --info-light: #eff6ff;
+  --info-foreground: #1e40af;
+
+  /* =========================
+     Links
+     ========================= */
+
+  --link: #4f46e5;
+  --link-hover: #4338ca;
+
+  /* =========================
+     Focus
+     ========================= */
+
+  --focus: #6366f1;
+  --focus-ring: rgba(99, 102, 241, 0.25);
+
+  /* =========================
+     Overlay
+     ========================= */
+
+  --overlay: rgba(15, 23, 42, 0.5);
+
+  /* =========================
+     Code / Markdown
+     ========================= */
+
+  --code-background: #f1f5f9;
+  --code-foreground: #334155;
+
+  --blockquote-background: #f8fafc;
+  --blockquote-border: #cbd5e1;
+
+  /* =========================
+     Scrollbar
+     ========================= */
+
+  --scrollbar-track: #f8fafc;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+}
+
+.dark {
+
+  /* =========================
+     Base
+     ========================= */
+
+  --background: #0f172a;
+  --foreground: #f8fafc;
+
+  /* =========================
+     Surface / Containers
+     ========================= */
+
+  --surface: #0f172a;
+  --surface-secondary: #111827;
+  --surface-tertiary: #1e293b;
+
+  --card: #111827;
+  --card-hover: #1e293b;
+
+  --sidebar: #111827;
+  --sidebar-hover: #1e293b;
+  --sidebar-active: #312e81;
+
+  --header: #0f172a;
+
+  /* =========================
+     Border / Divider
+     ========================= */
+
+  --border: #334155;
+  --border-light: #1e293b;
+  --border-strong: #475569;
+
+  /* =========================
+     Text
+     ========================= */
+
+  --text-primary: #69b1f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-placeholder: #64748b;
+  --text-disabled: #475569;
+
+  /* =========================
+     Primary / Brand
+     ========================= */
+
+  --primary: hsl(266, 82%, 18%);
+  --primary-hover: #6366f1;
+  --primary-active: #4f46e5;
+  --primary-light: #312e81;
+  --primary-lighter: #1e1b4b;
+
+  --primary-foreground: #ffffff;
+
+  /* =========================
+     Secondary
+     ========================= */
+
+  --secondary: #001d27;
+  --secondary-hover: #00384b;
+  --secondary-light: #005976;
+
+  --secondary-foreground: #ffffff;
+
+  /* =========================
+     Chat
+     ========================= */
+
+  --chat-background: #0f172a;
+
+  --user-message: #6366f1;
+  --user-message-foreground: #ffffff;
+
+  --assistant-message: #1e293b;
+  --assistant-message-foreground: #f8fafc;
+
+  --message-hover: #334155;
+
+  /* =========================
+     Input
+     ========================= */
+
+  --input-background: #1e293b;
+  --input-border: #475569;
+  --input-border-focus: #818cf8;
+
+  --input-placeholder: #64748b;
+
+  /* =========================
+     Button
+     ========================= */
+
+  --button-primary: #6366f1;
+  --button-primary-hover: #818cf8;
+
+  --button-secondary: #1e293b;
+  --button-secondary-hover: #334155;
+
+  --button-ghost-hover: #1e293b;
+
+  /* =========================
+     Voice / Recording
+     ========================= */
+
+  --recording: #f87171;
+  --recording-hover: #ef4444;
+  --recording-light: #450a0a;
+
+  --recording-wave: #f87171;
+
+  /* =========================
+     Status
+     ========================= */
+
+  --success: #4ade80;
+  --success-light: #052e16;
+  --success-foreground: #86efac;
+
+  --warning: #fbbf24;
+  --warning-light: #451a03;
+  --warning-foreground: #fde68a;
+
+  --error: #f87171;
+  --error-light: #450a0a;
+  --error-foreground: #fca5a5;
+
+  --info: #60a5fa;
+  --info-light: #172554;
+  --info-foreground: #93c5fd;
+
+  /* =========================
+     Links
+     ========================= */
+
+  --link: #818cf8;
+  --link-hover: #a5b4fc;
+
+  /* =========================
+     Focus
+     ========================= */
+
+  --focus: #818cf8;
+  --focus-ring: rgba(129, 140, 248, 0.3);
+
+  /* =========================
+     Overlay
+     ========================= */
+
+  --overlay: rgba(0, 0, 0, 0.7);
+
+  /* =========================
+     Code / Markdown
+     ========================= */
+
+  --code-background: #1e293b;
+  --code-foreground: #e2e8f0;
+
+  --blockquote-background: #111827;
+  --blockquote-border: #475569;
+
+  /* =========================
+     Scrollbar
+     ========================= */
+
+  --scrollbar-track: #111827;
+  --scrollbar-thumb: #475569;
+  --scrollbar-thumb-hover: #64748b;
 }
 
 @theme inline {
