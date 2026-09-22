@@ -12,8 +12,11 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { useConversation } from "@/hooks/useConversation";
 
 export function Sidebar() {
-
-  const {data: conversations, isLoading: conversationLoading, refetch} = useConversation();
+  const {
+    data: conversations,
+    isLoading: conversationLoading,
+    refetch,
+  } = useConversation();
   const [deletingConversationId, setDeletingConversationId] = useState<
     number | null
   >(null);
@@ -24,7 +27,6 @@ export function Sidebar() {
   );
   const [currentPageId, setCurrentPageId] = useState<null | number>(null);
   const router = useRouter();
-
 
   const deleteConversation = async (id: number) => {
     try {
@@ -50,7 +52,7 @@ export function Sidebar() {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 bg-[var(--surface)] text-[var(--text-primary)] flex flex-col shadow-lg relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
+      className="w-74 dark:bg-[var(--surface)] text-[var(--text-primary)] flex flex-col shadow-lg dark:shadow-xs dark:shadow-blue-900 relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
     >
       {!isNewChat && (
         <Link
@@ -58,38 +60,40 @@ export function Sidebar() {
           className="flex gap-2 items-center rounded-xl p-2 hover:bg-[var(--primary-hover)]"
         >
           <PencilSquareIcon className="h-5 w-5" />
-          <h3 className="space-y-2 font-semibold text-lg ">New chat</h3>
+          <span className="space-y-2 font-semibold text-sm ">New chat</span>
         </Link>
       )}
-      <div className="p-2 bg-[var(--card)] m-2 rounded-2xl">
-        <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
+      <div className="p-2 bg-[var(--card)] m-2 rounded-2xl shadow-lg">
+        <span className="space-y-2 font-bold text-sm uppercase">
+          Conversations
+        </span>
         {conversationLoading ? (
           <div className="flex justify-center py-12">
             <LoadingSpinner color="purple" size={4} border={8} />
           </div>
         ) : (
-          <div className="flex flex-col mt-2 p-2">
+          <div className="flex flex-col mt-1 p-1 gap-1.5">
             {conversations && conversations.length > 0 ? (
               conversations.map((conversation: Conversation) => (
                 <div
                   key={conversation.id}
-                  className="flex flex-row items-center rounded-xl hover:bg-[var(--primary-hover)] px-2 py-2"
+                  className="flex flex-row items-center rounded-xl hover:bg-[var(--primary-hover)] px-2 py-1"
                   onMouseOver={() => setCurrentHoveredItem(conversation.id)}
                   onMouseOut={() => setCurrentHoveredItem(null)}
                 >
                   <Link
                     href={`/conversation/${conversation.id}`}
-                    className="block transition-colors "
+                    className="block transition-colors text-xs"
                   >
                     {conversation.title}
                   </Link>
-                  {(currentHoveredItem === conversation.id &&
-                    deletingConversationId === null) && (
+                  {currentHoveredItem === conversation.id &&
+                    deletingConversationId === null && (
                       <button
                         onClick={() => deleteConversation(conversation.id)}
-                        className="bg-transparent"
+                        className="bg-transparent ml-auto mr-1"
                       >
-                        <TrashIcon className="h-5 w-5 text-red-400 hover:h-6 hover:w-6" />
+                        <TrashIcon className="h-4 w-4 text-red-400 hover:h-5 hover:w-5" />
                       </button>
                     )}
                   {deletingConversationId === conversation.id && (

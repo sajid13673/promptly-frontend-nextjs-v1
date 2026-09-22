@@ -22,7 +22,8 @@ function Conversation({
     useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
-  const buttonStyle = "bg-transparent hover:bg-blue-400 p-1.5";
+  const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
+  const iconStyle = "h-4 w-4 text-[var(--text-secondary)]";
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -77,7 +78,7 @@ function Conversation({
           <LoadingSpinner color="blue" border={8} size={10} />
         </div>
       ) : (
-        <div className="w-full min-w-md lg:max-w-4xl text-white p-3">
+        <div className="text-xs w-full min-w-md lg:max-w-4xl text-white p-3">
           {conversation?.messages &&
             conversation.messages.map((message: Message) => {
               const isUser = message.role === "USER";
@@ -87,7 +88,7 @@ function Conversation({
                   className={`flex ${isUser ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`text-lg p-3 rounded-xl ${
+                    className={`p-3 rounded-xl ${
                       isUser ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]" : "mr-4 text-[var(--chat-ai-text)]"
                     }`}
                   >
@@ -101,7 +102,7 @@ function Conversation({
                             }
                             className={buttonStyle}
                           >
-                            <PlayIcon className="h-6 w-6" />
+                            <PlayIcon className={iconStyle} />
                           </button>
                         )}
                         {currentPlayingId === message.id && (
@@ -111,7 +112,7 @@ function Conversation({
                                 onClick={resumeSpeak}
                                 className={buttonStyle}
                               >
-                                <PlayIcon className="h-6 w-6" />
+                                <PlayIcon className={iconStyle} />
                               </button>
                             )}
                             {speaking && !isPaused && (
@@ -119,7 +120,7 @@ function Conversation({
                                 onClick={pauseSpeak}
                                 className={buttonStyle}
                               >
-                                <PauseIcon className="h-6 w-6" />
+                                <PauseIcon className={iconStyle} />
                               </button>
                             )}
                             {(speaking || isPaused) && (
@@ -127,7 +128,7 @@ function Conversation({
                                 onClick={stopSpeak}
                                 className={buttonStyle}
                               >
-                                <StopIcon className="h-6 w-6" />
+                                <StopIcon className={iconStyle} />
                               </button>
                             )}
                           </>

@@ -15,7 +15,8 @@ type ChatFormProps = {
   onTranscript?: (text: string) => void;
 };
 
-const buttonStyle = "rounded-2xl w-10 h-10 flex items-center justify-center";
+const buttonStyle = "rounded-xl w-8 h-8 flex items-center justify-center";
+const iconStyle = "h-5 w-5";
 
 function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
   const [message, setMessage] = useState<string>("");
@@ -104,7 +105,7 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
             value={message}
             rows={1}
             onKeyDown={handleKeyDown}
-            className="w-full resize-none placeholder-[var(--input-placeholder-secondary)] bg-[var(--input-background)] text-[var(--text-primary)] py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
+            className="text-xs w-full resize-none placeholder-[var(--input-placeholder-secondary)] bg-[var(--input-background)] text-[var(--text-secondary)] py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
             placeholder="Ask anything"
             style={{ maxHeight: "200px" }}
             onChange={(e) => setMessage(e.target.value)}
@@ -122,10 +123,10 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
           {status === "idle" && !uploading && !loading && (
             <button
               onClick={startRecording}
-              className={`bg-[var(--button-primary)] ${buttonStyle}`}
+              className={`bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] ${buttonStyle}`}
               aria-label="Start recording"
             >
-              <MicrophoneIcon className="h-7 w-7" />
+              <MicrophoneIcon className={iconStyle} />
             </button>
           )}
 
@@ -144,14 +145,14 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
                   className={`bg-red-400 ${buttonStyle}`}
                   aria-label="Stop recording"
                 >
-                  <StopCircleIcon className="h-7 w-7" />
+                  <StopCircleIcon className={iconStyle} />
                 </button>
                 <button
                   onClick={cancelRecording}
                   className={`bg-red-400 ${buttonStyle}`}
                   aria-label="Cancel recording"
                 >
-                  <XCircleIcon className="h-7 w-7" />
+                  <XCircleIcon className={iconStyle} />
                 </button>
               </>
             )}
@@ -166,14 +167,14 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
             <button
               type="submit"
               disabled={loading}
-              className={`bg-[var(--button-primary)] ${buttonStyle} ${
+              className={`bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] ${buttonStyle} ${
                 loading ? "opacity-80 cursor-not-allowed" : ""
               }`}
             >
               {loading ? (
                 <LoadingSpinner size={1.5} color="white" border={4} />
               ) : (
-                <ArrowUpCircleIcon className="h-7 w-7" />
+                <ArrowUpCircleIcon className={iconStyle} />
               )}
             </button>
           )}

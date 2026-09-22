@@ -16,7 +16,7 @@ export default function ThemeToggle() {
     return (
       <button
         type="button"
-        className="h-9 w-9 rounded-lg"
+        className="h-7 w-7 rounded-lg"
         aria-label="Toggle theme"
       />
     );
@@ -28,13 +28,13 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="flex h-9 w-9 items-center justify-center rounded-lg"
+      className="flex h-7 w-7 items-center justify-center rounded-lg"
       aria-label="Toggle theme"
     >
       {isDark ? (
-        <SunIcon className="h-5 w-5" />
+        <SunIcon className="h-4 w-4" />
       ) : (
-        <MoonIcon className="h-5 w-5" />
+        <MoonIcon className="h-4 w-4" />
       )}
     </button>
   );
