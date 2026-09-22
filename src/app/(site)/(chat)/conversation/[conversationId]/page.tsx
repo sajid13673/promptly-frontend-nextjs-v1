@@ -72,7 +72,7 @@ function Conversation({
     window.speechSynthesis.resume();
   };
   return (
-    <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto minimal-scrollbar">
+    <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
       {conversationLoading ? (
         <div className="my-auto">
           <LoadingSpinner color="blue" border={8} size={10} />

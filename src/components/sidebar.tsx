@@ -52,7 +52,7 @@ export function Sidebar() {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 dark:bg-[var(--surface)] text-[var(--text-primary)] flex flex-col shadow-lg dark:shadow-xs dark:shadow-blue-900 relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
+      className="w-74 dark:bg-[var(--surface)] text-[var(--text-primary)] flex flex-col shadow-lg dark:shadow-xs dark:shadow-blue-900 relative pt-2 overflow-y-auto scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent p-1"
     >
       {!isNewChat && (
         <Link

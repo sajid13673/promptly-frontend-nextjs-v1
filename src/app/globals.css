@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+@plugin "tailwind-scrollbar";
 
 :root {
  /* =========================
@@ -155,7 +156,7 @@
      ========================= */
 
   --scrollbar-track: #f8fafc;
-  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb: #a967ff;
   --scrollbar-thumb-hover: #94a3b8;
 
    /* =========================
@@ -322,7 +323,7 @@
      ========================= */
 
   --scrollbar-track: #111827;
-  --scrollbar-thumb: #475569;
+  --scrollbar-thumb: #815eaf;
   --scrollbar-thumb-hover: #64748b;
 
    /* =========================
@@ -355,7 +356,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
+/* 
 textarea::-webkit-scrollbar {
   width: 6px;
 }
@@ -365,7 +366,7 @@ textarea::-webkit-scrollbar-track {
 }
 
 textarea::-webkit-scrollbar-thumb {
-  background-color: #d8b4fe; /* light purple */
+  background-color: #d8b4fe; 
   border-radius: 9999px;
 }
 
@@ -385,7 +386,7 @@ textarea::-webkit-scrollbar-thumb {
 .minimal-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #8702caae transparent;
-}
+} */
 
 @layer base {
   button {
