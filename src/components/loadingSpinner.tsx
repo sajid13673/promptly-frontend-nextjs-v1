@@ -1,7 +1,7 @@
 import React from "react";
 
-type SpinnerColor = "blue" | "purple" | "red";
-  const COLOR_MAP: Record<SpinnerColor, string> = {blue : '#1B82F7', purple: '#701094', red: '#E82030'}
+type SpinnerColor = "blue" | "purple" | "red" | "white";
+  const COLOR_MAP: Record<SpinnerColor, string> = {blue : '#1B82F7', purple: '#701094', red: '#E82030', white: '#ffffff'}
 
 const LoadingSpinner = ({
   size = 5,

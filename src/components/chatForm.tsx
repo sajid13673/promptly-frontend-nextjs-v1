@@ -9,17 +9,22 @@ import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { transcribe } from "@/lib/api";
 import { StopCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import { WaveformVisualizer } from "./waveformVisualizer";
+import { useTheme } from "next-themes";
 
 type ChatFormProps = {
   onSend: (message: string) => Promise<void>;
   onTranscript?: (text: string) => void;
 };
 
-const buttonStyle = "rounded-2xl w-10 h-10 flex items-center justify-center";
+const buttonStyle = "rounded-xl w-8 h-8 flex items-center justify-center";
+const iconStyle = "h-5 w-5";
 
 function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const { resolvedTheme } = useTheme();
+
+  const isDark = resolvedTheme === "dark";
 
   const sendMessageMutation = useMutation({
     mutationFn: onSend,
@@ -97,24 +102,24 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
   }, [message]);
   return (
     <form onSubmit={handleSubmit} className="p-2">
-      <div className="flex flex-col gap-2 bg-purple-700 p-2 rounded-3xl">
+      <div className="flex flex-col gap-2 bg-[var(--card)] p-2 rounded-3xl">
         {status !== "recording" ? (
           <textarea
             ref={textareaRef}
             value={message}
             rows={1}
             onKeyDown={handleKeyDown}
-            className="w-full resize-none placeholder-purple-200 bg-purple-600 text-white py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
+            className="text-xs w-full resize-none placeholder-[var(--input-placeholder-secondary)] bg-[var(--input-background)] text-[var(--text-secondary)] py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
             placeholder="Ask anything"
             style={{ maxHeight: "200px" }}
             onChange={(e) => setMessage(e.target.value)}
           />
         ) : (
-          <div className="flex-1 bg-purple-600 rounded-3xl px-2 py-1">
+          <div className="flex-1 bg-[var(--primary)] rounded-3xl px-2 py-1">
             <WaveformVisualizer
               analyserRef={analyserRef}
               isActive={status === "recording"}
-              color="#d9b5f8"
+              color={isDark ? "#ffffff" : "#4e097c"}
             />
           </div>
         )}
@@ -122,17 +127,16 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
           {status === "idle" && !uploading && !loading && (
             <button
               onClick={startRecording}
-              className={`bg-purple-600 ${buttonStyle}`}
+              className={`bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] ${buttonStyle}`}
               aria-label="Start recording"
             >
-              {/* <Mic size={24} /> */}
-              <MicrophoneIcon className="h-8 w-8" />
+              <MicrophoneIcon className={iconStyle} />
             </button>
           )}
 
           <div className="flex items-center gap-3">
             {status === "requesting" && (
-              <div className={`${buttonStyle}`}>
+              <div className={`${buttonStyle}  text-purple-400 dark:text-gray-400`}>
                 <Loader2 size={24} className="animate-spin" />
               </div>
             )}
@@ -145,21 +149,20 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
                   className={`bg-red-400 ${buttonStyle}`}
                   aria-label="Stop recording"
                 >
-                  <StopCircleIcon className="h-8 w-8" />
+                  <StopCircleIcon className={iconStyle} />
                 </button>
                 <button
                   onClick={cancelRecording}
                   className={`bg-red-400 ${buttonStyle}`}
                   aria-label="Cancel recording"
                 >
-                  {/* <XMarkIcon className="h-8 w-8"/> */}
-                  <XCircleIcon className="h-8 w-8" />
+                  <XCircleIcon className={iconStyle} />
                 </button>
               </>
             )}
 
             {(status === "processing" || uploading) && (
-              <div className={` ${buttonStyle}`}>
+              <div className={`${buttonStyle} text-purple-400 dark:text-gray-400`}>
                 <Loader2 size={24} className="animate-spin" />
               </div>
             )}
@@ -168,14 +171,14 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
             <button
               type="submit"
               disabled={loading}
-              className={`bg-purple-600 ${buttonStyle} ${
+              className={`bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] ${buttonStyle} ${
                 loading ? "opacity-80 cursor-not-allowed" : ""
               }`}
             >
               {loading ? (
-                <LoadingSpinner size={1.5} color="purple" border={4} />
+                <LoadingSpinner size={1.5} color="white" border={4} />
               ) : (
-                <ArrowUpCircleIcon className="h-8 w-8 text-purple-200" />
+                <ArrowUpCircleIcon className={iconStyle} />
               )}
             </button>
           )}

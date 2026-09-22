@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import ClientLayout from "./ClientLayout";
+import { ThemeProvider } from "@/components/providers/ThemeProviders";
 
 export const metadata: Metadata = {
   title: {
@@ -24,11 +25,24 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full bg-gradient-to-r from-blue-50 to-purple-50">
-      <body className="antialiased min-h-screen max-h-screen flex flex-col overflow-hidden">
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+    <html lang="en" suppressHydrationWarning className="h-full">
+      <body
+        className="
+          antialiased 
+          min-h-screen 
+          max-h-screen 
+          flex 
+          flex-col 
+          overflow-hidden  
+          bg-gradient-to-r
+        from-blue-50
+        to-purple-50
+        dark:from-slate-950
+        dark:to-slate-900"
+      >
+        <ThemeProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </ThemeProvider>
       </body>
     </html>
   );
