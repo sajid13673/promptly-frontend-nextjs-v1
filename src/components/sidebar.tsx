@@ -50,18 +50,18 @@ export function Sidebar() {
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ duration: 0.3 }}
-      className="w-74 bg-purple-700 text-white flex flex-col shadow-lg relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
+      className="w-74 bg-[var(--surface)] text-[var(--text-primary)] flex flex-col shadow-lg relative pt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent minimal-scrollbar p-1"
     >
       {!isNewChat && (
         <Link
           href="/"
-          className="flex gap-2 items-center rounded-xl p-2 hover:bg-purple-500"
+          className="flex gap-2 items-center rounded-xl p-2 hover:bg-[var(--primary-hover)]"
         >
           <PencilSquareIcon className="h-5 w-5" />
           <h3 className="space-y-2 font-semibold text-lg ">New chat</h3>
         </Link>
       )}
-      <div className="p-2 bg-purple-600 m-2 rounded-2xl">
+      <div className="p-2 bg-[var(--card)] m-2 rounded-2xl">
         <h3 className="space-y-2 font-bold text-lg uppercase">Conversations</h3>
         {conversationLoading ? (
           <div className="flex justify-center py-12">
@@ -73,7 +73,7 @@ export function Sidebar() {
               conversations.map((conversation: Conversation) => (
                 <div
                   key={conversation.id}
-                  className="flex flex-row items-center rounded-xl hover:bg-purple-700 px-2 py-2"
+                  className="flex flex-row items-center rounded-xl hover:bg-[var(--primary-hover)] px-2 py-2"
                   onMouseOver={() => setCurrentHoveredItem(conversation.id)}
                   onMouseOut={() => setCurrentHoveredItem(null)}
                 >
@@ -87,6 +87,7 @@ export function Sidebar() {
                     deletingConversationId === null) && (
                       <button
                         onClick={() => deleteConversation(conversation.id)}
+                        className="bg-transparent"
                       >
                         <TrashIcon className="h-5 w-5 text-red-400 hover:h-6 hover:w-6" />
                       </button>

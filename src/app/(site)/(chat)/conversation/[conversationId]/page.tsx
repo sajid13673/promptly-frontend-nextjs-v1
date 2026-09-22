@@ -87,8 +87,8 @@ function Conversation({
                   className={`flex ${isUser ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`text-lg p-3 rounded-xl text-white ${
-                      isUser ? "bg-blue-600/40" : "mr-4"
+                    className={`text-lg p-3 rounded-xl ${
+                      isUser ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]" : "mr-4 text-[var(--chat-ai-text)]"
                     }`}
                   >
                     {message.message}

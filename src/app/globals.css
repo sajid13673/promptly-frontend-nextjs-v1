@@ -13,16 +13,16 @@
      Surface / Containers
      ========================= */
 
-  --surface: #ffffff;
-  --surface-secondary: #f8fafc;
+  --surface: hsl(265, 86%, 97%);
+  --surface-secondary: #f5fcff;
   --surface-tertiary: #f1f5f9;
 
-  --card: #ffffff;
+  --card: #d9f3fdba;
   --card-hover: #f8fafc;
 
   --sidebar: #f8fafc;
   --sidebar-hover: #f1f5f9;
-  --sidebar-active: #e0e7ff;
+  --sidebar-active: #d1dcff;
 
   --header: #ffffff;
 
@@ -49,7 +49,7 @@
      ========================= */
 
   --primary: hsl(266, 100%, 84%);
-  --primary-hover: hsl(266, 95%, 77%);
+  --primary-hover: hsl(266, 100%, 78%);
   --primary-active: hsl(266, 90%, 70%);
   --primary-light: #eef2ff;
   --primary-lighter: #f5f3ff;
@@ -88,16 +88,18 @@
   --input-border: #cbd5e1;
   --input-border-focus: #6366f1;
 
-  --input-placeholder: #94a3b8;
+  --input-placeholder-primary: hsl(267, 44%, 82%);
+  --input-placeholder-secondary: #bddce7;
+
 
   /* =========================
      Button
      ========================= */
 
-  --button-primary: #6366f1;
-  --button-primary-hover: #4f46e5;
+  --button-primary: hsl(266, 100%, 73%);
+  --button-primary-hover: hsl(266, 96%, 73%);
 
-  --button-secondary: #f1f5f9;
+  --button-secondary: #5acef9;
   --button-secondary-hover: #e2e8f0;
 
   --button-ghost-hover: #f1f5f9;
@@ -169,6 +171,16 @@
   --scrollbar-track: #f8fafc;
   --scrollbar-thumb: #cbd5e1;
   --scrollbar-thumb-hover: #94a3b8;
+
+   /* =========================
+     Chat
+     ========================= */
+
+   --chat-user-bg: #10bfff41;
+   --chat-user-text: #005f79;
+
+   --chat-ai-bg: #f1f5f9;
+   --chat-ai-text: #03426f;
 }
 
 .dark {
@@ -220,7 +232,7 @@
      ========================= */
 
   --primary: hsl(266, 82%, 18%);
-  --primary-hover: #6366f1;
+  --primary-hover: #068c9336;
   --primary-active: #4f46e5;
   --primary-light: #312e81;
   --primary-lighter: #1e1b4b;
@@ -340,6 +352,16 @@
   --scrollbar-track: #111827;
   --scrollbar-thumb: #475569;
   --scrollbar-thumb-hover: #64748b;
+
+   /* =========================
+   Chat
+   ========================= */
+
+   --chat-user-bg: #14546b64;
+   --chat-user-text: #cee8ee;
+
+   --chat-ai-bg: #f1f5f9;
+   --chat-ai-text: #70cff1;
 }
 
 @theme inline {
