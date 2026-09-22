@@ -9,6 +9,7 @@ import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { transcribe } from "@/lib/api";
 import { StopCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import { WaveformVisualizer } from "./waveformVisualizer";
+import { useTheme } from "next-themes";
 
 type ChatFormProps = {
   onSend: (message: string) => Promise<void>;
@@ -21,6 +22,9 @@ const iconStyle = "h-5 w-5";
 function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const { resolvedTheme } = useTheme();
+
+  const isDark = resolvedTheme === "dark";
 
   const sendMessageMutation = useMutation({
     mutationFn: onSend,
@@ -111,11 +115,11 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
             onChange={(e) => setMessage(e.target.value)}
           />
         ) : (
-          <div className="flex-1 bg-purple-600 rounded-3xl px-2 py-1">
+          <div className="flex-1 bg-[var(--primary)] rounded-3xl px-2 py-1">
             <WaveformVisualizer
               analyserRef={analyserRef}
               isActive={status === "recording"}
-              color="#d9b5f8"
+              color={isDark ? "#ffffff" : "#4e097c"}
             />
           </div>
         )}

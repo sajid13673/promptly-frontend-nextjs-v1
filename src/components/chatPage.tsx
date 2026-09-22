@@ -23,7 +23,7 @@ function ChatPage() {
   };
   return (
     <div className="w-full max-w-md m-auto">
-      <h2 className="text-3xl bold mb-3 text-purple-200 text-center font-bold">
+      <h2 className="text-3xl bold mb-3 text-purple-400 dark:text-gray-400 text-center font-bold">
         {"What's on your mind today ?"}
       </h2>
       <ChatForm onSend={onSend} />
