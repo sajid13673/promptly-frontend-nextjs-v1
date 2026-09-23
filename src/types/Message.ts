@@ -1,8 +1,8 @@
-type Role = "CHATBOT" | "USER";
+type Role = "assistant" | "user";
 
 export type Message = {
   conversation_id: number;
-  message: string;
+  content: string;
   id: number;
   role: Role;
   created_at: string;
