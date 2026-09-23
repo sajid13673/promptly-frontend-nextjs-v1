@@ -81,7 +81,7 @@ function Conversation({
         <div className="text-xs w-full min-w-md lg:max-w-4xl text-white p-3">
           {conversation?.messages &&
             conversation.messages.map((message: Message) => {
-              const isUser = message.role === "USER";
+              const isUser = message.role === "user";
               return (
                 <div
                   key={message.id}
@@ -92,13 +92,13 @@ function Conversation({
                       isUser ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]" : "mr-4 text-[var(--chat-ai-text)]"
                     }`}
                   >
-                    {message.message}
+                    {message.content}
                     {!isUser && (
                       <div style={{ display: "flex", columnGap: "0.5rem" }}>
                         {!speaking && (
                           <button
                             onClick={() =>
-                              startSpeaking(message.message, message.id)
+                              startSpeaking(message.content, message.id)
                             }
                             className={buttonStyle}
                           >
