@@ -10,6 +10,8 @@ import { StopIcon } from "@heroicons/react/24/solid";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import React, { use, useEffect, useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from "remark-gfm";
 
 function Conversation({
   params,
@@ -92,7 +94,25 @@ function Conversation({
                       isUser ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]" : "mr-4 text-[var(--chat-ai-text)]"
                     }`}
                   >
+                    <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                     components={{
+                        table: ({node, ...props}) => (
+                          <table className="my-1.5 border-collapse border border-[var(--chat-table-border)] w-full" {...props} />
+                        ),
+                        th: ({node, ...props}) => (
+                          <th className="border border-[var(--chat-table-border)] px-3 py-2 bg-[var(--chat-table-head-bg)] text-left" {...props} />
+                        ),
+                        td: ({node, ...props}) => (
+                          <td className="border border-[var(--chat-table-border)] px-3 py-2" {...props} />
+                        ),
+                        strong: ({node, ...props}) => (
+                          <strong className="font-semibold" {...props} />
+                        ),
+                      }}
+                    >
                     {message.content}
+                    </ReactMarkdown>
                     {!isUser && (
                       <div style={{ display: "flex", columnGap: "0.5rem" }}>
                         {!speaking && (

@@ -168,6 +168,9 @@
 
    --chat-ai-bg: #f1f5f9;
    --chat-ai-text: #03426f;
+
+   --chat-table-border: #00b1f1;
+   --chat-table-head-bg: #c5f0ff;
 }
 
 .dark {
@@ -335,6 +338,9 @@
 
    --chat-ai-bg: #f1f5f9;
    --chat-ai-text: #70cff1;
+
+   --chat-table-border: #1c5f77e3;
+   --chat-table-head-bg: #093644e3;
 }
 
 @theme inline {
