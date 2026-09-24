@@ -12,6 +12,7 @@ import React, { use, useEffect, useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
+import { stripMarkdown } from "@/utils/markdown";
 
 function Conversation({
   params,
@@ -38,6 +39,7 @@ function Conversation({
       console.error(error);
     }
   };
+
   const { speak, cancel, speaking } = useSpeechSynthesis();
 
   useEffect(() => {
@@ -61,8 +63,9 @@ function Conversation({
   };
 
   const startSpeaking = (msg: string, id: number) => {
+    const plainText = stripMarkdown(msg);
     setCurrentPlayingId(id);
-    speak({ text: msg });
+    speak({ text: plainText });
   };
   const pauseSpeak = () => {
     setIsPaused(true);
