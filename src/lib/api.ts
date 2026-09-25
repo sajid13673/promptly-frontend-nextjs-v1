@@ -10,6 +10,12 @@ const token: string | null =
   const transcriberApiUrl = process.env.NEXT_PUBLIC_TRANSCRIBER_API_URL;
   console.log('utl', apiUrl);
   
+interface ResetPasswordPayload {
+  email: string;
+  code: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 export async function loginUser(
   email: string,
@@ -168,4 +174,42 @@ export async function deleteConversationById(id: number) {
     throw new Error("Something went wrong");
   }
   return res.json();
+}
+
+export async function sendResetCode(email: string) {
+  const res = await fetch(`${apiUrl}/password/send-code`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to send code');
+  return data;
+}
+
+export async function verifyResetCode(email: string, code: string) {
+  const res = await fetch(`${apiUrl}/password/verify-code`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, code }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Invalid or expired code');
+  return data;
+}
+
+export async function resetPassword({email, code, password, passwordConfirmation}: ResetPasswordPayload) {
+  const res = await fetch(`${apiUrl}/password/reset`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email,
+      code,
+      password,
+      password_confirmation: passwordConfirmation,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to reset password');
+  return data;
 }
