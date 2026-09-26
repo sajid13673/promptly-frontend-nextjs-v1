@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteConversationById, getConversations } from "@/lib/api";
+import { deleteConversationById } from "@/lib/api";
 import { Conversation } from "@/types/Conversation";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { usePathname, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useConversation } from "@/hooks/useConversation";
+import { stripMarkdown } from "@/utils/markdown";
 
 export function Sidebar() {
   const {
@@ -85,7 +86,7 @@ export function Sidebar() {
                     href={`/conversation/${conversation.id}`}
                     className="block transition-colors text-xs"
                   >
-                    {conversation.title}
+                    {stripMarkdown(conversation.title)}
                   </Link>
                   {currentHoveredItem === conversation.id &&
                     deletingConversationId === null && (

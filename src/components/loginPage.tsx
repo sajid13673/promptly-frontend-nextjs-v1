@@ -78,7 +78,7 @@ function LoginPage(): JSX.Element {
 
       <p className="text-center text-gray-500 text-sm mt-6">
         Don’t have an account?{" "}
-        <Link href="/auth/register" className="text-blue-600 hover:underline">
+        <Link href="/register" className="text-blue-600 hover:underline">
           Sign up
         </Link>
       </p>
