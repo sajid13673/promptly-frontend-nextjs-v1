@@ -163,7 +163,7 @@ export default function ForgotPasswordPage() {
           <p className="text-green-600 font-medium">
             Password reset successfully!
           </p>
-          <a href="/login" className="text-sm underline">
+          <a href="/login" className="text-sm underline text-blue-600">
             Back to login
           </a>
         </div>
