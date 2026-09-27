@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import FullPageLoader from "@/components/fullPageLoader";
+import { getCurrentUser } from "./api";
 
 const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const AuthenticatedComponent = (props: P) => {
@@ -11,13 +12,21 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
     const [isChecking, setIsChecking] = useState(true);
 
     useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        router.replace("/login");
-      } else {
-        setIsAuthorized(true);
-      }
-      setIsChecking(false);
+      let isMounted = true;
+
+      getCurrentUser().then((data) => {
+        if (!isMounted) return;
+        if (!data) {
+          router.replace("/login");
+        } else {
+          setIsAuthorized(true);
+        }
+        setIsChecking(false);
+      });
+
+      return () => {
+        isMounted = false;
+      };
     }, [router]);
 
     if (isChecking) return <FullPageLoader />;
