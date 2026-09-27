@@ -2,14 +2,10 @@ import { AuthResponse } from "@/types/AuthResponse";
 import { GenerateResponse } from "@/types/generateResponse";
 import { RegisterFormData } from "@/types/RegisterFormData";
 import { TranscribeResponse } from "@/types/transcribeResponse";
+import { apiFetch } from "@/utils/apiFetch";
 
-const token: string | null =
-  typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const transcriberApiUrl = process.env.NEXT_PUBLIC_TRANSCRIBER_API_URL;
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const transcriberApiUrl = process.env.NEXT_PUBLIC_TRANSCRIBER_API_URL;
-  console.log('utl', apiUrl);
-  
 interface ResetPasswordPayload {
   email: string;
   code: string;
@@ -21,12 +17,8 @@ export async function loginUser(
   email: string,
   password: string,
 ): Promise<AuthResponse> {
-  const res: Response = await fetch(`${apiUrl}/login`, {
+  const res: Response = await apiFetch(`/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
     body: JSON.stringify({ email, password }),
   });
 
@@ -43,12 +35,9 @@ export async function registerUser({
   password,
   confirmPassword,
 }: RegisterFormData): Promise<AuthResponse> {
-  const res: Response = await fetch(`${apiUrl}/register`, {
+
+  const res: Response = await apiFetch(`/register`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
     body: JSON.stringify({
       name,
       email,
@@ -70,13 +59,8 @@ export async function generate({
   message: string;
   conversationId: number | null;
 }): Promise<GenerateResponse> {
-  const res: Response = await fetch(`${apiUrl}/generate`, {
+  const res: Response = await apiFetch(`/generate`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
     body: JSON.stringify({ message, conversation_id: conversationId }),
   });
 
@@ -106,31 +90,33 @@ export async function transcribe(blob: Blob): Promise<TranscribeResponse> {
   return res.json();
 }
 
+export async function getCurrentUser() {
+  const res = await apiFetch(`/user`, {
+    method: "GET",
+  });
+
+  if (!res.ok) return null;
+  return res.json();
+}
+
 export async function logoutUser(): Promise<void> {
   try {
-    await fetch(`${apiUrl}/logout`, {
+    const res = await apiFetch(`/logout`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
     });
-    localStorage.removeItem("token");
-    // window.location.href = "/login";
+
+    if (!res.ok) {
+      throw new Error("Logout failed");
+    }
   } catch (error) {
     console.error("Logout failed:", error);
+    throw error; // let the caller decide how to handle a failed logout
   }
 }
 
 export async function getConversations() {
-  const res: Response = await fetch(`${apiUrl}/conversations`, {
+  const res: Response = await apiFetch(`/conversations`, {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
   });
 
   if (!res.ok) {
@@ -140,17 +126,9 @@ export async function getConversations() {
 }
 
 export async function getConversationById(id: string) {
-  const res: Response = await fetch(
-    `${apiUrl}/conversations/${id}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    },
-  );
+  const res: Response = await apiFetch(`/conversations/${id}`, {
+    method: "GET",
+  });
 
   if (!res.ok) {
     throw new Error("Something went wrong");
@@ -158,17 +136,9 @@ export async function getConversationById(id: string) {
   return res.json();
 }
 export async function deleteConversationById(id: number) {
-  const res: Response = await fetch(
-    `${apiUrl}/conversations/${id}`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    },
-  );
+  const res: Response = await apiFetch(`/conversations/${id}`, {
+    method: "DELETE",
+  });
 
   if (!res.ok) {
     throw new Error("Something went wrong");
@@ -177,31 +147,33 @@ export async function deleteConversationById(id: number) {
 }
 
 export async function sendResetCode(email: string) {
-  const res = await fetch(`${apiUrl}/password/send-code`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const res = await apiFetch(`/password/send-code`, {
+    method: "POST",
     body: JSON.stringify({ email }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Failed to send code');
+  if (!res.ok) throw new Error(data.message || "Failed to send code");
   return data;
 }
 
 export async function verifyResetCode(email: string, code: string) {
-  const res = await fetch(`${apiUrl}/password/verify-code`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const res = await apiFetch(`/password/verify-code`, {
+    method: "POST",
     body: JSON.stringify({ email, code }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Invalid or expired code');
+  if (!res.ok) throw new Error(data.message || "Invalid or expired code");
   return data;
 }
 
-export async function resetPassword({email, code, password, passwordConfirmation}: ResetPasswordPayload) {
-  const res = await fetch(`${apiUrl}/password/reset`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+export async function resetPassword({
+  email,
+  code,
+  password,
+  passwordConfirmation,
+}: ResetPasswordPayload) {
+  const res = await apiFetch(`/password/reset`, {
+    method: "POST",
     body: JSON.stringify({
       email,
       code,
@@ -210,6 +182,6 @@ export async function resetPassword({email, code, password, passwordConfirmation
     }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Failed to reset password');
+  if (!res.ok) throw new Error(data.message || "Failed to reset password");
   return data;
 }
