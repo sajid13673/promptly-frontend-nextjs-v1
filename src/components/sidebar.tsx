@@ -105,7 +105,7 @@ export function Sidebar() {
                 </div>
               ))
             ) : (
-              <p className="text-lg font-bold text-gray-300/80 italic">
+              <p className="text-lg font-bold text-gray-500/80 italic">
                 No conversations to display
               </p>
             )}

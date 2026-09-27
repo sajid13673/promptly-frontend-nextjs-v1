@@ -54,9 +54,9 @@ export default function ClientLayout({
             </div>
             <ThemeToggle />
             <nav className="space-x-4 text-xs">
-              <Link href="/settings" className={`${buttonStyle} px-2 py-3`}>
+              {/* <Link href="/settings" className={`${buttonStyle} px-2 py-3`}>
                 Settings
-              </Link>
+              </Link> */}
               <button
                 onClick={handleLogout}
                 className={`${buttonStyle} p-2 bg-transparent`}
