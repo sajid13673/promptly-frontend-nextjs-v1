@@ -38,7 +38,13 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    sendMessageMutation.mutate(message);
+    const trimmedMessage = message.trim();
+
+    if (!trimmedMessage) {
+      setLoading(false);
+      return;
+    }
+    sendMessageMutation.mutate(trimmedMessage);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && e.ctrlKey) {
@@ -112,6 +118,7 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
             className="text-xs w-full resize-none placeholder-[var(--input-placeholder-secondary)] bg-[var(--input-background)] text-[var(--text-secondary)] py-3 px-3 rounded-3xl font-semibold transition disabled:opacity-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent focus:outline-none focus:ring-0 focus:border-transparent"
             placeholder="Ask anything"
             style={{ maxHeight: "200px" }}
+            required
             onChange={(e) => setMessage(e.target.value)}
           />
         ) : (
