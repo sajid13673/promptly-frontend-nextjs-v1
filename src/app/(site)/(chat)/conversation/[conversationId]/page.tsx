@@ -78,11 +78,6 @@ function Conversation({
     window.speechSynthesis.resume();
   };
 
-  useEffect(()=>{
-    console.log('speaking', speaking);
-    console.log('isPaused', isPaused);
-    
-  },[speaking, isPaused])
   return (
     <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
       {conversationLoading ? (
