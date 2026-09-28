@@ -1,5 +1,6 @@
 // utils/api/apiFetch.ts
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 function getCookie(name: string): string | null {
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
@@ -7,7 +8,7 @@ function getCookie(name: string): string | null {
 }
 
 async function ensureCsrfCookie(): Promise<void> {
-  await fetch(`http://localhost:8000/sanctum/csrf-cookie`, {
+  await fetch(`${appUrl}/sanctum/csrf-cookie`, {
     credentials: "include",
   });
 }
