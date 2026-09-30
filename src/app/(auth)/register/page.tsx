@@ -14,8 +14,10 @@ function Register(): JSX.Element {
     confirmPassword: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage,setErrorMessage] = useState<string | null>(null);
   const handleSubmit = async (e: React.FormEvent) => {
     try {
+      setErrorMessage(null);
       setLoading(true);
       e.preventDefault();
       console.log("formData", formData);
@@ -26,7 +28,7 @@ function Register(): JSX.Element {
       }
       window.location.href = "/";
     } catch (err) {
-      console.log("error", err);
+      setErrorMessage(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -44,6 +46,7 @@ function Register(): JSX.Element {
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
         Register
       </h2>
+      {errorMessage && <p className="text-red-600 text-sm font-bold text-center">{errorMessage}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="text-gray-600 text-sm mb-1">Full Name</label>

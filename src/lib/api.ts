@@ -23,7 +23,11 @@ export async function loginUser(
   });
 
   if (!res.ok) {
-    throw new Error("Login failed");
+    const errorData = await res.json();
+    const errorMessage =
+      errorData.message || errorData.error || "An unknown error occurred";
+
+    throw new Error(errorMessage);
   }
 
   return res.json();
@@ -47,7 +51,11 @@ export async function registerUser({
   });
 
   if (!res.ok) {
-    throw new Error("Register failed");
+    const errorData = await res.json();
+    const errorMessage =
+      errorData.message || errorData.error || "An unknown error occurred";
+
+    throw new Error(errorMessage);
   }
   return res.json();
 }
