@@ -9,10 +9,10 @@ import { PauseIcon } from "@heroicons/react/24/solid";
 import { StopIcon } from "@heroicons/react/24/solid";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import React, { use, useEffect, useState } from "react";
-import { useSpeechSynthesis } from "react-speech-kit";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
 import { stripMarkdown } from "@/utils/markdown";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 
 function Conversation({
   params,
