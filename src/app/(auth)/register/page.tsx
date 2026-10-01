@@ -16,19 +16,16 @@ function Register(): JSX.Element {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
-  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage,setErrorMessage] = useState<string | null>(null);
   const onSubmit = async (data: RegisterFormData) => {
     try {
       setErrorMessage(null);
-      setLoading(true);
 
       await registerUser(data);
       window.location.href = "/";
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
-      setLoading(false);
     }
   };
   return (
@@ -85,7 +82,7 @@ function Register(): JSX.Element {
         </div>
         <button
           type="submit"
-          disabled={loading}
+          disabled={isSubmitting}
           className="flex items-center uppercase w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
         >
           {isSubmitting ? (
