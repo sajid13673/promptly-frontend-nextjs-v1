@@ -22,9 +22,9 @@ function LoginPage(): JSX.Element {
       }
       window.location.href = "/";
     } catch (err) {
-      console.log("err : ", err);
-
-      setError("Invalid login credentials");
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred"
+      );
     } finally {
       setLoading(false);
     }
