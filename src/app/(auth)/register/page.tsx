@@ -1,31 +1,29 @@
 "use client";
 import { registerUser } from "@/lib/api";
 import redirectIfAuthenticated from "@/lib/redirectIfAuthenticated";
-import { AuthResponse } from "@/types/AuthResponse";
+import { registerSchema } from "@/schemas/auth";
 import { RegisterFormData } from "@/types/RegisterFormData";
 import Link from "next/link";
 import { JSX, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function Register(): JSX.Element {
-  const [formData, setFormData] = useState<RegisterFormData>({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+   const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage,setErrorMessage] = useState<string | null>(null);
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (data: RegisterFormData) => {
     try {
       setErrorMessage(null);
       setLoading(true);
-      e.preventDefault();
-      console.log("formData", formData);
 
-      const data: AuthResponse = await registerUser(formData);
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
+      await registerUser(data);
       window.location.href = "/";
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "An unexpected error occurred");
@@ -33,55 +31,44 @@ function Register(): JSX.Element {
       setLoading(false);
     }
   };
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  };
   return (
     <div className="bg-white p-5 rounded-2xl w-full max-w-md">
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
         Register
       </h2>
       {errorMessage && <p className="text-red-600 text-sm font-bold text-center">{errorMessage}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="text-gray-600 text-sm mb-1">Full Name</label>
           <input
-            name="name"
+            {...register("name")}
             placeholder="Full name"
-            value={formData.name}
-            onChange={handleOnChange}
             className="w-full p-3 border text-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             required
           />
+           {errors.name && <p className="text-red-600 text-sm">{errors.name.message}</p>}
         </div>
         <div>
           <label className="text-gray-600 text-sm mb-1">Email</label>
           <input
             type="email"
-            name="email"
+            {...register("email")}
             placeholder="you@example.com"
-            value={formData.email}
-            onChange={handleOnChange}
             className="w-full p-3 border text-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             required
           />
+           {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
         </div>
         <div>
           <label className="block text-gray-600 text-sm mb-1">Password</label>
           <input
             type="password"
-            name="password"
+            {...register("password")}
             placeholder="••••••••"
-            value={formData.password}
-            onChange={handleOnChange}
             className="w-full p-3 text-gray-500 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             required
           />
+           {errors.password && <p className="text-red-600 text-sm">{errors.password.message}</p>}
         </div>
         <div>
           <label className="block text-gray-600 text-sm mb-1">
@@ -89,20 +76,19 @@ function Register(): JSX.Element {
           </label>
           <input
             type="password"
-            name="confirmPassword"
+            {...register("confirmPassword")}
             placeholder="••••••••"
-            value={formData.confirmPassword}
-            onChange={handleOnChange}
             className="w-full p-3 text-gray-500 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             required
           />
+           {errors.confirmPassword && <p className="text-red-600 text-sm">{errors.confirmPassword.message}</p>}
         </div>
         <button
           type="submit"
           disabled={loading}
           className="flex items-center uppercase w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
         >
-          {loading ? (
+          {isSubmitting ? (
             <div className="mx-auto flex gap-3">
               <span>registering </span>
               <svg
