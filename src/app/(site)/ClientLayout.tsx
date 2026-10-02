@@ -35,8 +35,17 @@ export default function ClientLayout({
     <QueryClientProvider client={queryClient}>
       <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
         <div className="flex flex-col min-h-screen">
-          <header className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] shadow px-4 py-1 flex items-center gap-1.5">
-            <h1 className="text-sm font-bold text-[var(--text-primary)]">Promptly AI</h1>
+          {/* <header className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] shadow px-4 py-1 flex items-center gap-1.5"> */}
+          <header
+            className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] shadow px-4 flex items-center gap-1.5"
+            style={{
+              paddingTop: "calc(env(safe-area-inset-top, 0px) + 0.25rem)",
+              paddingBottom: "0.25rem",
+            }}
+          >
+            <h1 className="text-sm font-bold text-[var(--text-primary)]">
+              Promptly AI
+            </h1>
             <div className="relative group mr-auto">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
