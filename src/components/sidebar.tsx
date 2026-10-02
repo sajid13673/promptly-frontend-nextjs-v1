@@ -84,7 +84,8 @@ export function Sidebar() {
                 >
                   <Link
                     href={`/conversation/${conversation.id}`}
-                    className="block transition-colors text-xs"
+                    className="block transition-colors text-xs truncate"
+                    title={stripMarkdown(conversation.title)}
                   >
                     {stripMarkdown(conversation.title)}
                   </Link>
@@ -98,8 +99,8 @@ export function Sidebar() {
                       </button>
                     )}
                   {deletingConversationId === conversation.id && (
-                    <div>
-                      <LoadingSpinner color="red" size={2} />
+                    <div className="ml-auto mr-1">
+                      <LoadingSpinner color="red" size={1} />
                     </div>
                   )}
                 </div>

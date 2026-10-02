@@ -85,7 +85,7 @@ function Conversation({
           <LoadingSpinner color="blue" border={8} size={10} />
         </div>
       ) : (
-        <div className="text-xs w-full min-w-md lg:max-w-4xl text-white p-3">
+        <div className="text-xs w-full md:min-w-md lg:max-w-4xl text-white p-3">
           {conversation?.messages &&
             conversation.messages.map((message: Message) => {
               const isUser = message.role === "user";
@@ -167,7 +167,7 @@ function Conversation({
         </div>
       )}
 
-      <div className="p-3 sticky bottom-1 w-md mt-auto">
+      <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full min-w-xs">
         <ChatForm onSend={onSend} />
       </div>
     </div>

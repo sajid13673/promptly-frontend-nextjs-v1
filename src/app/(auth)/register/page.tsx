@@ -116,7 +116,7 @@ function Register(): JSX.Element {
       </form>
       <p className="text-center text-gray-500 text-sm mt-6">
         Already have an account?{" "}
-        <Link href="/auth/login" className="text-blue-600 hover:underline">
+        <Link href="/login" className="text-blue-600 hover:underline">
           Login
         </Link>
       </p>
