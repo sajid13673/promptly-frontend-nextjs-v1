@@ -29,8 +29,8 @@ export default function RootLayout({
       <body
         className="
           antialiased 
-          min-h-screen 
-          max-h-screen 
+          min-h-[100dvh] 
+          max-h-[100dvh] 
           flex 
           flex-col 
           overflow-hidden  

@@ -34,7 +34,7 @@ export default function ClientLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <SiteLayoutContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-[100dvh]">
           <header className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] shadow px-4 py-1 flex items-center gap-1.5">
             <h1 className="text-sm font-bold text-[var(--text-primary)]">Promptly AI</h1>
             <div className="relative group mr-auto">
