@@ -14,6 +14,7 @@ import remarkGfm from "remark-gfm";
 import { stripMarkdown } from "@/utils/markdown";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { SiteLayoutContext } from "@/app/(site)/ClientLayout";
+import StickyHeader from "@/components/stickyHeader";
 
 function Conversation({
   params,
@@ -81,102 +82,105 @@ function Conversation({
   };
 
   return (
-    <div className="flex flex-col items-center flex-1 gap-2 p-2 overflow-y-auto scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
+    <div className="flex flex-col items-center flex-1 gap-2 overflow-y-auto scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
       {conversationLoading ? (
         <div className="my-auto">
           <LoadingSpinner color="blue" border={8} size={10} />
         </div>
       ) : (
-        <div className="text-xs w-full md:min-w-md lg:max-w-4xl text-white p-3">
-          {conversation?.messages &&
-            conversation.messages.map((message: Message) => {
-              const isUser = message.role === "user";
-              return (
-                <div
-                  key={message.id}
-                  className={`flex ${isUser ? "justify-end" : "justify-start"}`}
-                >
+        <div className="text-xs w-full text-white flex flex-col items-center">
+          <StickyHeader title={stripMarkdown(conversation?.title ?? "Untitled Conversation")}  isSidebarOpen={sidebarOpen}/>
+          <div className="m-3 md:min-w-md lg:max-w-4xl">
+            {conversation?.messages &&
+              conversation.messages.map((message: Message) => {
+                const isUser = message.role === "user";
+                return (
                   <div
-                    className={`p-3 rounded-xl ${
-                      isUser
-                        ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]"
-                        : "mr-4 text-[var(--chat-ai-text)]"
-                    }`}
+                    key={message.id}
+                    className={`flex ${isUser ? "justify-end" : "justify-start"}`}
                   >
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        table: ({ node, ...props }) => (
-                          <table
-                            className="my-1.5 border-collapse border border-[var(--chat-table-border)] w-full"
-                            {...props}
-                          />
-                        ),
-                        th: ({ node, ...props }) => (
-                          <th
-                            className="border border-[var(--chat-table-border)] px-3 py-2 bg-[var(--chat-table-head-bg)] text-left"
-                            {...props}
-                          />
-                        ),
-                        td: ({ node, ...props }) => (
-                          <td
-                            className="border border-[var(--chat-table-border)] px-3 py-2"
-                            {...props}
-                          />
-                        ),
-                        strong: ({ node, ...props }) => (
-                          <strong className="font-semibold" {...props} />
-                        ),
-                      }}
+                    <div
+                      className={`p-3 rounded-xl ${
+                        isUser
+                          ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]"
+                          : "mr-4 text-[var(--chat-ai-text)]"
+                      }`}
                     >
-                      {message.content}
-                    </ReactMarkdown>
-                    {!isUser && (
-                      <div style={{ display: "flex", columnGap: "0.5rem" }}>
-                        {!speaking && (
-                          <button
-                            onClick={() =>
-                              startSpeaking(message.content, message.id)
-                            }
-                            className={buttonStyle}
-                          >
-                            <PlayIcon className={iconStyle} />
-                          </button>
-                        )}
-                        {currentPlayingId === message.id && (
-                          <>
-                            {isPaused && (
-                              <button
-                                onClick={resumeSpeak}
-                                className={buttonStyle}
-                              >
-                                <PlayIcon className={iconStyle} />
-                              </button>
-                            )}
-                            {speaking && !isPaused && (
-                              <button
-                                onClick={pauseSpeak}
-                                className={buttonStyle}
-                              >
-                                <PauseIcon className={iconStyle} />
-                              </button>
-                            )}
-                            {(speaking || isPaused) && (
-                              <button
-                                onClick={stopSpeak}
-                                className={buttonStyle}
-                              >
-                                <StopIcon className={iconStyle} />
-                              </button>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    )}
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          table: ({ node, ...props }) => (
+                            <table
+                              className="my-1.5 border-collapse border border-[var(--chat-table-border)] w-full"
+                              {...props}
+                            />
+                          ),
+                          th: ({ node, ...props }) => (
+                            <th
+                              className="border border-[var(--chat-table-border)] px-3 py-2 bg-[var(--chat-table-head-bg)] text-left"
+                              {...props}
+                            />
+                          ),
+                          td: ({ node, ...props }) => (
+                            <td
+                              className="border border-[var(--chat-table-border)] px-3 py-2"
+                              {...props}
+                            />
+                          ),
+                          strong: ({ node, ...props }) => (
+                            <strong className="font-semibold" {...props} />
+                          ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                      {!isUser && (
+                        <div style={{ display: "flex", columnGap: "0.5rem" }}>
+                          {!speaking && (
+                            <button
+                              onClick={() =>
+                                startSpeaking(message.content, message.id)
+                              }
+                              className={buttonStyle}
+                            >
+                              <PlayIcon className={iconStyle} />
+                            </button>
+                          )}
+                          {currentPlayingId === message.id && (
+                            <>
+                              {isPaused && (
+                                <button
+                                  onClick={resumeSpeak}
+                                  className={buttonStyle}
+                                >
+                                  <PlayIcon className={iconStyle} />
+                                </button>
+                              )}
+                              {speaking && !isPaused && (
+                                <button
+                                  onClick={pauseSpeak}
+                                  className={buttonStyle}
+                                >
+                                  <PauseIcon className={iconStyle} />
+                                </button>
+                              )}
+                              {(speaking || isPaused) && (
+                                <button
+                                  onClick={stopSpeak}
+                                  className={buttonStyle}
+                                >
+                                  <StopIcon className={iconStyle} />
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+          </div>
         </div>
       )}
 
