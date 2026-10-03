@@ -87,7 +87,7 @@ function Conversation({
           <LoadingSpinner color="blue" border={8} size={10} />
         </div>
       ) : (
-        <div className="text-xs w-full text-white">
+        <div className="text-xs w-full text-white flex flex-col items-center">
           <div className=" p-2 sticky top-0 mb-auto w-full bg-[var(--surface-secondary)] shadow dark:shadow-blue-300 dark:shadow-xs text-[var(--text-primary)]">
             {stripMarkdown(conversation?.title ?? "Untitled Conversation")}
           </div>
