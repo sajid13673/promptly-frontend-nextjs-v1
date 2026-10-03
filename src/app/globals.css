@@ -348,6 +348,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  --animate-marquee: marquee 15s linear infinite;
 }
 
 @media (prefers-color-scheme: dark) {

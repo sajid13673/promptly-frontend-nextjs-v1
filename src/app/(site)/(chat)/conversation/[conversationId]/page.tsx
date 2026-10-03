@@ -14,6 +14,7 @@ import remarkGfm from "remark-gfm";
 import { stripMarkdown } from "@/utils/markdown";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { SiteLayoutContext } from "@/app/(site)/ClientLayout";
+import StickyHeader from "@/components/stickyHeader";
 
 function Conversation({
   params,
@@ -88,9 +89,7 @@ function Conversation({
         </div>
       ) : (
         <div className="text-xs w-full text-white flex flex-col items-center">
-          <div className=" p-2 sticky top-0 mb-auto w-full bg-[var(--surface-secondary)] shadow dark:shadow-blue-300 dark:shadow-xs text-[var(--text-primary)]">
-            {stripMarkdown(conversation?.title ?? "Untitled Conversation")}
-          </div>
+          <StickyHeader title={stripMarkdown(conversation?.title ?? "Untitled Conversation")}  isSidebarOpen={sidebarOpen}/>
           <div className="m-3 md:min-w-md lg:max-w-4xl">
             {conversation?.messages &&
               conversation.messages.map((message: Message) => {
