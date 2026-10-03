@@ -8,11 +8,12 @@ import { Message } from "@/types/Message";
 import { PauseIcon } from "@heroicons/react/24/solid";
 import { StopIcon } from "@heroicons/react/24/solid";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import React, { use, useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
 import { stripMarkdown } from "@/utils/markdown";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import { SiteLayoutContext } from "@/app/(site)/ClientLayout";
 
 function Conversation({
   params,
@@ -27,6 +28,7 @@ function Conversation({
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
   const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
   const iconStyle = "h-4 w-4 text-[var(--text-secondary)]";
+  const { sidebarOpen } = useContext(SiteLayoutContext);
 
   const onSend = async (message: string): Promise<void> => {
     try {
@@ -167,9 +169,9 @@ function Conversation({
         </div>
       )}
 
-      <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full min-w-xs">
+      {!sidebarOpen && <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full">
         <ChatForm onSend={onSend} />
-      </div>
+      </div>}
     </div>
   );
 }
