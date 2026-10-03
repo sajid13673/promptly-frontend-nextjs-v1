@@ -9,7 +9,7 @@ import { PauseIcon } from "@heroicons/react/24/solid";
 import { StopIcon } from "@heroicons/react/24/solid";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import React, { use, useContext, useEffect, useState } from "react";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { stripMarkdown } from "@/utils/markdown";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
@@ -98,27 +98,38 @@ function Conversation({
                 >
                   <div
                     className={`p-3 rounded-xl ${
-                      isUser ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]" : "mr-4 text-[var(--chat-ai-text)]"
+                      isUser
+                        ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]"
+                        : "mr-4 text-[var(--chat-ai-text)]"
                     }`}
                   >
-                    <ReactMarkdown 
-                    remarkPlugins={[remarkGfm]}
-                     components={{
-                        table: ({node, ...props}) => (
-                          <table className="my-1.5 border-collapse border border-[var(--chat-table-border)] w-full" {...props} />
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        table: ({ node, ...props }) => (
+                          <table
+                            className="my-1.5 border-collapse border border-[var(--chat-table-border)] w-full"
+                            {...props}
+                          />
                         ),
-                        th: ({node, ...props}) => (
-                          <th className="border border-[var(--chat-table-border)] px-3 py-2 bg-[var(--chat-table-head-bg)] text-left" {...props} />
+                        th: ({ node, ...props }) => (
+                          <th
+                            className="border border-[var(--chat-table-border)] px-3 py-2 bg-[var(--chat-table-head-bg)] text-left"
+                            {...props}
+                          />
                         ),
-                        td: ({node, ...props}) => (
-                          <td className="border border-[var(--chat-table-border)] px-3 py-2" {...props} />
+                        td: ({ node, ...props }) => (
+                          <td
+                            className="border border-[var(--chat-table-border)] px-3 py-2"
+                            {...props}
+                          />
                         ),
-                        strong: ({node, ...props}) => (
+                        strong: ({ node, ...props }) => (
                           <strong className="font-semibold" {...props} />
                         ),
                       }}
                     >
-                    {message.content}
+                      {message.content}
                     </ReactMarkdown>
                     {!isUser && (
                       <div style={{ display: "flex", columnGap: "0.5rem" }}>
@@ -169,9 +180,11 @@ function Conversation({
         </div>
       )}
 
-      {!sidebarOpen && <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full">
-        <ChatForm onSend={onSend} />
-      </div>}
+      {!sidebarOpen && (
+        <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full">
+          <ChatForm onSend={onSend} />
+        </div>
+      )}
     </div>
   );
 }
