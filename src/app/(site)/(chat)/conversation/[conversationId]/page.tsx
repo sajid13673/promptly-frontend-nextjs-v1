@@ -29,7 +29,13 @@ function Conversation({
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
   const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
   const iconStyle = "h-4 w-4 text-[var(--text-secondary)]";
-  const { sidebarOpen } = useContext(SiteLayoutContext);
+  const ctx = useContext(SiteLayoutContext);
+  if (!ctx) {
+    throw new Error(
+      "useContext(SiteLayoutContext) must be used within SiteLayoutContext.Provider",
+    );
+  }
+  const { sidebarOpen } = ctx;
 
   const onSend = async (message: string): Promise<void> => {
     try {
