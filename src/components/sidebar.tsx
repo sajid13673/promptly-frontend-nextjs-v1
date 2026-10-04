@@ -11,6 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useConversation } from "@/hooks/useConversation";
 import { stripMarkdown } from "@/utils/markdown";
+import ConfirmationModal from "./confirmationModal";
 
 export function Sidebar() {
   const {
@@ -27,6 +28,9 @@ export function Sidebar() {
     null,
   );
   const [currentPageId, setCurrentPageId] = useState<null | number>(null);
+  const [conversationToDelete, setConversationToDelete] = useState<
+    number | null
+  >(null);
   const router = useRouter();
 
   const deleteConversation = async (id: number) => {
@@ -92,7 +96,7 @@ export function Sidebar() {
                   {currentHoveredItem === conversation.id &&
                     deletingConversationId === null && (
                       <button
-                        onClick={() => deleteConversation(conversation.id)}
+                        onClick={() => setConversationToDelete(conversation.id)}
                         className="bg-transparent ml-auto mr-1"
                       >
                         <TrashIcon className="h-4 w-4 text-red-400 hover:h-5 hover:w-5" />
@@ -112,6 +116,19 @@ export function Sidebar() {
             )}
           </div>
         )}
+        <ConfirmationModal
+          isOpen={conversationToDelete !== null}
+          title="Delete conversation?"
+          message="Are you sure you want to delete this conversation? This action cannot be undone."
+          confirmText="Delete"
+          onCancel={() => setConversationToDelete(null)}
+          onConfirm={() => {
+            if (conversationToDelete === null) return;
+
+            deleteConversation(conversationToDelete);
+            setConversationToDelete(null);
+          }}
+        />
       </div>
     </motion.div>
   );
