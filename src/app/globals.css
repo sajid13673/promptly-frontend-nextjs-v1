@@ -83,7 +83,7 @@
      Button
      ========================= */
 
-  --button-primary: hsl(266, 100%, 73%);
+  --button-primary: #b175ff;
   --button-primary-hover: hsl(266, 100%, 67%);
 
   --button-secondary: #5acef9;
@@ -253,8 +253,8 @@
      Button
      ========================= */
 
-  --button-primary: #6365f1da;
-  --button-primary-hover: #252797;
+  --button-primary: #793cc9;
+  --button-primary-hover: #5d24a8;
 
   --button-secondary: #1e293b;
   --button-secondary-hover: #334155;
