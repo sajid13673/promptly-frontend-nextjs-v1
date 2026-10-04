@@ -5,6 +5,5 @@ export const useConversation = () =>
     useQuery({
         queryKey: ["conversations"],
         queryFn: getConversations,
-        initialData: null,
         select: (response) => response.data
     })
