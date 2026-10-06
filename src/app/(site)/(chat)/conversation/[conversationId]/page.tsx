@@ -95,8 +95,13 @@ function Conversation({
         </div>
       ) : (
         <div className="text-xs w-full text-white flex flex-col items-center">
-          <StickyHeader title={stripMarkdown(conversation?.title ?? "Untitled Conversation")}  isSidebarOpen={sidebarOpen}/>
-          <div className="m-3 md:min-w-md lg:max-w-4xl w-full">
+          <StickyHeader
+            title={stripMarkdown(
+              conversation?.title ?? "Untitled Conversation",
+            )}
+            isSidebarOpen={sidebarOpen}
+          />
+          <div className="p-1.5 m-3 md:min-w-md lg:max-w-4xl w-full">
             {conversation?.messages &&
               conversation.messages.map((message: Message) => {
                 const isUser = message.role === "user";
@@ -108,8 +113,8 @@ function Conversation({
                     <div
                       className={`p-3 rounded-xl ${
                         isUser
-                          ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]"
-                          : "mr-4 text-[var(--chat-ai-text)] flex-1 min-w-0 "
+                          ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)] ml-7"
+                          : "text-[var(--chat-ai-text)] flex-1 min-w-0 "
                       }`}
                     >
                       <ReactMarkdown
