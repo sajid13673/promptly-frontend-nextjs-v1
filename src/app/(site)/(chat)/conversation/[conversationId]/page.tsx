@@ -106,10 +106,10 @@ function Conversation({
                     className={`flex ${isUser ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`flex-1 min-w-0 p-3 rounded-xl ${
+                      className={`p-3 rounded-xl ${
                         isUser
                           ? "bg-[var(--chat-user-bg)] text-[var(--chat-user-text)]"
-                          : "mr-4 text-[var(--chat-ai-text)]"
+                          : "mr-4 text-[var(--chat-ai-text)] flex-1 min-w-0 "
                       }`}
                     >
                       <ReactMarkdown
