@@ -116,7 +116,7 @@ function Conversation({
                         remarkPlugins={[remarkGfm]}
                         components={{
                           table: ({ node, ...props }) => (
-                            <div className="overflow-x-auto max-w-full my-1.5">
+                            <div className="p-1 overflow-x-auto max-w-full my-1.5 scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
                               <table
                                 className="border-collapse border border-[var(--chat-table-border)] w-full"
                                 {...props}
