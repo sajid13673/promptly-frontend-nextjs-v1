@@ -47,9 +47,9 @@ function ChatForm({ onSend, onTranscript }: ChatFormProps): JSX.Element {
     sendMessageMutation.mutate(trimmedMessage);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && e.ctrlKey) {
+    if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
-      handleSubmit(e);
+      e.currentTarget.form?.requestSubmit();
     }
   };
 
