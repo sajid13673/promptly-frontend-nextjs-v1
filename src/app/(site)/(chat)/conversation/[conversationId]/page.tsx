@@ -1,7 +1,7 @@
 "use client";
 import ChatForm from "@/components/chatForm";
 import LoadingSpinner from "@/components/loadingSpinner";
-import { generate, getConversationById } from "@/lib/api";
+import { ApiError, generate, getConversationById } from "@/lib/api";
 import type { Conversation } from "@/types/Conversation";
 import { GenerateResponse } from "@/types/generateResponse";
 import { Message } from "@/types/Message";
@@ -16,6 +16,7 @@ import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { SiteLayoutContext } from "@/app/(site)/ClientLayout";
 import StickyHeader from "@/components/stickyHeader";
 import rehypeHighlight from "rehype-highlight";
+import { notFound } from "next/navigation";
 
 function Conversation({
   params,
@@ -28,6 +29,8 @@ function Conversation({
     useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
+  const [conversationNotFound, setConversationNotFound] = useState(false);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
   const iconStyle = "h-4 w-4 text-[var(--text-secondary)]";
   const ctx = useContext(SiteLayoutContext);
@@ -55,18 +58,36 @@ function Conversation({
   useEffect(() => {
     const fetchConversation = async (): Promise<void> => {
       try {
+        setConversationNotFound(false);
+        setLoadError(null);
         setConversationLoading(true);
         const res = await getConversationById(conversationId);
         setConversation(res.data);
       } catch (error) {
-        console.error(error);
+        if (
+          error instanceof ApiError &&
+          (error.status === 404 || error.status === 400)
+        ) {
+          setConversationNotFound(true);
+        } else {
+          console.error(error);
+          setLoadError(
+            error instanceof Error ? error : new Error("Something went wrong"),
+          );
+        }
       } finally {
         setConversationLoading(false);
       }
     };
-
     fetchConversation();
   }, [conversationId]);
+
+  if (conversationNotFound) {
+    notFound();
+  }
+  if (loadError) {
+    throw loadError;
+  }
 
   const stopSpeak = () => {
     setIsPaused(false);
@@ -212,11 +233,13 @@ function Conversation({
         </div>
       )}
 
-      {!sidebarOpen && (
-        <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full">
-          <ChatForm onSend={onSend} />
-        </div>
-      )}
+      <div
+        className={`p-3 sticky bottom-1 sm:w-md mt-auto w-full ${
+          sidebarOpen ? "hidden sm:block" : ""
+        }`}
+      >
+        <ChatForm onSend={onSend} />
+      </div>
     </div>
   );
 }

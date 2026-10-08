@@ -13,6 +13,14 @@ interface ResetPasswordPayload {
   passwordConfirmation: string;
 }
 
+export class ApiError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
 export async function loginUser(
   email: string,
   password: string,
@@ -139,7 +147,7 @@ export async function getConversationById(id: string) {
   });
 
   if (!res.ok) {
-    throw new Error("Something went wrong");
+    throw new ApiError("Failed to load conversation", res.status);
   }
   return res.json();
 }
