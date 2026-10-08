@@ -79,36 +79,46 @@ export function Sidebar() {
         ) : (
           <div className="flex flex-col mt-1 p-1 gap-1.5">
             {conversations && conversations.length > 0 ? (
-              conversations.map((conversation: Conversation) => (
-                <div
-                  key={conversation.id}
-                  className="flex flex-row items-center rounded-xl hover:bg-[var(--primary-hover)] px-2 py-1"
-                  onMouseOver={() => setCurrentHoveredItem(conversation.id)}
-                  onMouseOut={() => setCurrentHoveredItem(null)}
-                >
-                  <Link
-                    href={`/conversation/${conversation.id}`}
-                    className="block transition-colors text-xs truncate"
-                    title={stripMarkdown(conversation.title)}
+              conversations.map((conversation: Conversation) => {
+                const href = `/conversation/${conversation.id}`;
+                const isActive = pathName === href;
+                return (
+                  <div
+                    key={conversation.id}
+                    className={`flex flex-row items-center rounded-xl hover:bg-[var(--primary-hover)] px-2 py-1 ${
+                      isActive
+                        ? "bg-[var(--primary)]/60 font-semibold dark:bg-[var(--primary-light)]/60"
+                        : "hover:bg-[var(--primary)]/10"
+                    }`}
+                    onMouseOver={() => setCurrentHoveredItem(conversation.id)}
+                    onMouseOut={() => setCurrentHoveredItem(null)}
                   >
-                    {stripMarkdown(conversation.title)}
-                  </Link>
-                  {currentHoveredItem === conversation.id &&
-                    deletingConversationId === null && (
-                      <button
-                        onClick={() => setConversationToDelete(conversation.id)}
-                        className="bg-transparent ml-auto mr-1"
-                      >
-                        <TrashIcon className="h-4 w-4 text-red-400 hover:h-5 hover:w-5" />
-                      </button>
+                    <Link
+                      href={`/conversation/${conversation.id}`}
+                      className="block transition-colors text-xs truncate"
+                      title={stripMarkdown(conversation.title)}
+                    >
+                      {stripMarkdown(conversation.title)}
+                    </Link>
+                    {currentHoveredItem === conversation.id &&
+                      deletingConversationId === null && (
+                        <button
+                          onClick={() =>
+                            setConversationToDelete(conversation.id)
+                          }
+                          className="bg-transparent ml-auto mr-1"
+                        >
+                          <TrashIcon className="h-4 w-4 text-red-400 hover:h-5 hover:w-5" />
+                        </button>
+                      )}
+                    {deletingConversationId === conversation.id && (
+                      <div className="ml-auto mr-1">
+                        <LoadingSpinner color="red" size={1} />
+                      </div>
                     )}
-                  {deletingConversationId === conversation.id && (
-                    <div className="ml-auto mr-1">
-                      <LoadingSpinner color="red" size={1} />
-                    </div>
-                  )}
-                </div>
-              ))
+                  </div>
+                );
+              })
             ) : (
               <p className="text-lg font-bold text-gray-500/80 italic">
                 No conversations to display
