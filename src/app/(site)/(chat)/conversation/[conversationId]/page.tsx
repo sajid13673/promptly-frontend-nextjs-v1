@@ -29,9 +29,9 @@ function Conversation({
     useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentPlayingId, setCurrentPlayingId] = useState<null | number>(null);
- const [conversationNotFound, setConversationNotFound] = useState(false); 
- const [loadError, setLoadError] = useState<Error | null>(null);
- const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
+  const [conversationNotFound, setConversationNotFound] = useState(false);
+  const [loadError, setLoadError] = useState<Error | null>(null);
+  const buttonStyle = "bg-transparent hover:bg-blue-400 p-0.5";
   const iconStyle = "h-4 w-4 text-[var(--text-secondary)]";
   const ctx = useContext(SiteLayoutContext);
   if (!ctx) {
@@ -55,34 +55,39 @@ function Conversation({
 
   const { speak, cancel, speaking } = useSpeechSynthesis();
 
-useEffect(() => {
-  const fetchConversation = async (): Promise<void> => {
-    try {
-      setConversationNotFound(false);
-      setLoadError(null);
-      setConversationLoading(true);
-      const res = await getConversationById(conversationId);
-      setConversation(res.data);
-    } catch (error) {
-      if (error instanceof ApiError && (error.status === 404 || error.status === 400)) {
-        setConversationNotFound(true);
-      } else {
-        console.error(error);
-        setLoadError(error instanceof Error ? error : new Error("Something went wrong"));
+  useEffect(() => {
+    const fetchConversation = async (): Promise<void> => {
+      try {
+        setConversationNotFound(false);
+        setLoadError(null);
+        setConversationLoading(true);
+        const res = await getConversationById(conversationId);
+        setConversation(res.data);
+      } catch (error) {
+        if (
+          error instanceof ApiError &&
+          (error.status === 404 || error.status === 400)
+        ) {
+          setConversationNotFound(true);
+        } else {
+          console.error(error);
+          setLoadError(
+            error instanceof Error ? error : new Error("Something went wrong"),
+          );
+        }
+      } finally {
+        setConversationLoading(false);
       }
-    } finally {
-      setConversationLoading(false);
-    }
-  };
-  fetchConversation();
-}, [conversationId]);
+    };
+    fetchConversation();
+  }, [conversationId]);
 
-if (conversationNotFound) {
-  notFound();
-}
-if (loadError) {
-  throw loadError;
-}
+  if (conversationNotFound) {
+    notFound();
+  }
+  if (loadError) {
+    throw loadError;
+  }
 
   const stopSpeak = () => {
     setIsPaused(false);
@@ -228,11 +233,13 @@ if (loadError) {
         </div>
       )}
 
-      {!sidebarOpen && (
-        <div className="p-3 sticky bottom-1 sm:w-md mt-auto w-full">
-          <ChatForm onSend={onSend} />
-        </div>
-      )}
+      <div
+        className={`p-3 sticky bottom-1 sm:w-md mt-auto w-full ${
+          sidebarOpen ? "hidden sm:block" : ""
+        }`}
+      >
+        <ChatForm onSend={onSend} />
+      </div>
     </div>
   );
 }
