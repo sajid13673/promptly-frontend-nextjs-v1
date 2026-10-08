@@ -15,6 +15,7 @@ import { stripMarkdown } from "@/utils/markdown";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { SiteLayoutContext } from "@/app/(site)/ClientLayout";
 import StickyHeader from "@/components/stickyHeader";
+import rehypeHighlight from "rehype-highlight";
 
 function Conversation({
   params,
@@ -119,6 +120,7 @@ function Conversation({
                     >
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeHighlight]}
                         components={{
                           table: ({ node, ...props }) => (
                             <div className="p-1 overflow-x-auto max-w-full my-1.5 scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent">
@@ -142,6 +144,19 @@ function Conversation({
                           ),
                           strong: ({ node, ...props }) => (
                             <strong className="font-semibold" {...props} />
+                          ),
+
+                          pre: ({ node, ...props }) => (
+                            <pre
+                              className="my-2 p-3 max-w-full overflow-x-auto rounded-lg bg-[var(--chat-code-bg)] text-sm scroll-bar-thumb-[var(--scrollbar-thumb)] scrollbar-thin scrollbar-track-transparent [&_code]:bg-transparent [&_code]:p-0 [&_code]:rounded-none"
+                              {...props}
+                            />
+                          ),
+                          code: ({ node, ...props }) => (
+                            <code
+                              className="px-1.5 py-0.5 rounded bg-[var(--chat-code-bg)] font-mono text-[0.85em]"
+                              {...props}
+                            />
                           ),
                         }}
                       >
